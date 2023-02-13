@@ -15,3 +15,14 @@ const rect = new fabric.Rect({
 });
 
 canvas.add(rect);
+
+window.addEventListener('mousedown', (event) => {
+    let rect = new fabric.Rect({
+        top: event.pageX,
+        left: event.pageY,
+        width: 50,
+        height: 50,
+        fill: 'red',
+    })
+    canvas.add(rect);
+})
