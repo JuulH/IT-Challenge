@@ -18,8 +18,8 @@ canvas.add(rect);
 
 window.addEventListener('mousedown', (event) => {
     let rect = new fabric.Rect({
-        top: event.pageX,
-        left: event.pageY,
+        top: event.offsetY,
+        left: event.offsetX,
         width: 50,
         height: 50,
         fill: 'red',
