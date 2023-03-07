@@ -5,17 +5,36 @@ const shapeDropdown = document.getElementById('shape-dropdown');
 const shapeDropdownArrow = document.getElementsByClassName('toolbar-more')[0];
 const confirmDelete = document.getElementById('confirm-delete');
 
-// Set canvas size
+// Get page size (in pixels)
 const pageWidth  = Math.max(document.documentElement.clientWidth,  window.innerWidth  || 0);
-const pageHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);  
+const pageHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+const pageAspectRatio = pageWidth / pageHeight;
 
-const canvasWidth  = pageWidth - toolbar.offsetWidth - parseFloat(getComputedStyle(toolbar)['margin-left']);
-const canvasHeight = pageHeight;  
+// Usable canvas size (in pixels)
+const canvasInset = 100; // In pixels
+const canvasWidth  = pageWidth - toolbar.offsetWidth - parseFloat(getComputedStyle(toolbar)['margin-right']) - canvasInset;
+const canvasHeight = pageHeight - canvasInset;  
 
+// Create canvas
 const canvas = new fabric.Canvas('canvas', {
     width: canvasWidth,
     height: canvasHeight
 });
+
+// Postcard size (in mm)
+const postcardWidth = 100;
+const postcardHeight = 100;
+const aspectRatio = postcardWidth / postcardHeight;
+
+if(aspectRatio >= pageAspectRatio) {
+    // Postcard is wider than page
+    canvas.setWidth(canvasWidth);
+    canvas.setHeight(canvasWidth / aspectRatio);
+} else {
+    // Postcard is taller than page
+    canvas.setHeight(canvasHeight);
+    canvas.setWidth(canvasHeight * aspectRatio);
+}
 
 // Add shapes
 function ToggleDropdown() {
