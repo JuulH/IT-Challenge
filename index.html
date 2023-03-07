@@ -7,16 +7,26 @@
     <title>Femke Reuvers - IT Challenge</title>
     <script src="https://cdn.jsdelivr.net/npm/fabric"></script>
     <script defer src="canvas.js"></script>
+    <script src="https://kit.fontawesome.com/74cb3809fb.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="canvas.css">
 </head>
 <body>
-    <canvas id="canvas" width="500" height="500"></canvas>
+    <main>
+        <div id="toolbar">
+            <button class="toolbar-item"><span onclick="" class="fa-solid fa-brush"></span></button>
+            <button class="toolbar-item"><span onclick="AddRect();" class="fa-solid fa-square"></span></button>
+            <button class="toolbar-item"><span onclick="AddText();" class="fa-solid fa-t"></span></button>
+            <button class="toolbar-item"><span onclick="AddImage();" class="fa-solid fa-image"></span></button>
+            <button class="toolbar-item"><span onclick="DeleteItem();" class="fa-solid fa-trash"></span></button>
+        </div>
+        <canvas id="canvas" width="500" height="500"></canvas>
+    </main>
     
-    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+    <!--<script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
     <div id="qrcode"></div>
     <script type="text/javascript">
     new QRCode(document.getElementById("qrcode"), "https://www.femkereuvers.shop/");
-    </script>
+    </script>-->
 
 </body>
 </html>
