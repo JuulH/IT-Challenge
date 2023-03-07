@@ -1,7 +1,11 @@
+// Get DOM elements
 const DOMCanvas = document.getElementById('canvas');
 const toolbar = document.getElementById('toolbar');
 const shapeDropdown = document.getElementById('shape-dropdown');
+const shapeDropdownArrow = document.getElementsByClassName('toolbar-more')[0];
+const confirmDelete = document.getElementById('confirm-delete');
 
+// Set canvas size
 const pageWidth  = Math.max(document.documentElement.clientWidth,  window.innerWidth  || 0);
 const pageHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);  
 
@@ -13,8 +17,11 @@ const canvas = new fabric.Canvas('canvas', {
     height: canvasHeight
 });
 
+// Add shapes
 function ToggleDropdown() {
     shapeDropdown.classList.toggle('hidden');
+    shapeDropdownArrow.classList.toggle('fa-angle-right');
+    shapeDropdownArrow.classList.toggle('fa-angle-left');
 }
 
 function AddSquare() {
@@ -65,6 +72,16 @@ function AddText() {
     }));
 }
 
+// Delete items
+function ConfirmDelete() {
+    confirmDelete.classList.remove('hidden');
+}
+
 function DeleteItem() {
     canvas.remove(canvas.getActiveObject());
+    confirmDelete.classList.add('hidden');
+}
+
+function CancelDelete() {
+    confirmDelete.classList.add('hidden');
 }

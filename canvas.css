@@ -3,6 +3,11 @@
     padding: 0;
 }
 
+body {
+    background-color: #cccccc;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 main {
     display: flex;
     flex-direction: row;
@@ -13,28 +18,32 @@ main {
 }
 
 #canvas {
+    background-color: white;
     flex-grow: 1;
     height: 100vh;
 }
 
+.ui-element {
+    border: 2px solid darkgray;
+    border-radius: 1rem;
+    background-color: #f3f3f3;
+    padding: .75rem;
+    z-index: 99;
+}
+
 #toolbar {
-    position: relative;
     margin-left: 2rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding: .75rem;
-    border: 2px solid darkgray;
-    border-radius: 1rem 1rem 1rem 1rem;
-    /*background-color: #f3f3f3;*/
+    justify-content: flex-start;
     gap: 1rem;
 }
 
 .toolbar-item {
     font-size: 2rem;
     opacity: .7;
-    background-color: white;
+    background-color: transparent;
     width: 5rem;
     height: 5rem;
     display: flex;
@@ -46,38 +55,51 @@ main {
 }
 
 .toolbar-item:hover {
-    background-color: #f3f3f3;
+    background-color: #e6e6e6;
 }
 
 .toolbar-item:active {
     background-color: #dddddd;
 }
 
-.toolbar-item:has(.toolbar-more) {
+.toolbar-item:has(.toolbar-more) > span {
     position: relative;
 }
 
-.toolbar-item > .toolbar-more {
-    font-size: 1rem;
+.toolbar-item > span > .toolbar-more {
+    font-size: 1.25rem;
     opacity: .7;
     position: absolute;
-    bottom: 2rem;
-    right: .5rem;
+    bottom: .3rem;
+    right: -1rem;
+}
+
+.ui-expand-container {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.ui-expand {
+    position: absolute;
+    right: -8.25rem;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 #shape-dropdown {
-    z-index: 99;
-    padding: .75rem;
-    position: absolute;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
     gap: 1rem;
-    border: 2px solid darkgray;
-    border-radius: 1rem 1rem 1rem 1rem;
-    right: -7.5rem;
-    top: 0rem;
+}
+
+#confirm-delete {
+    display: flex;
+    flex-direction: row;
+    gap: .5rem;
+    right: -14rem;
 }
 
 .hidden {

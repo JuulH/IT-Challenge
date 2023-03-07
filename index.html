@@ -12,17 +12,25 @@
 </head>
 <body>
     <main>
-        <div id="toolbar">
+        <div id="toolbar" class="ui-element">
             <button class="toolbar-item"><span class="fa-solid fa-brush"></span></button>
-            <button onclick="ToggleDropdown();" class="toolbar-item"><span class="fa-solid fa-star"></span><span class="toolbar-more fa-solid fa-angle-right"></span></button>
-            <div id="shape-dropdown" class="hidden">
-                <button onclick="AddSquare();" class="toolbar-item"><span class="fa-solid fa-square"></span></button>
-                <button onclick="AddCircle();" class="toolbar-item"><span class="fa-solid fa-circle"></span></button>
-                <button onclick="AddTriangle();" class="toolbar-item"><span class="fa-solid fa-play"></span></button>
+            <div class="ui-expand-container">
+                <button onclick="ToggleDropdown();" class="toolbar-item"><span class="fa-solid fa-star"><span class="toolbar-more fa-solid fa-angle-right"></span></span></button>
+                <div id="shape-dropdown" class="ui-element ui-expand hidden">
+                    <button onclick="AddSquare();" class="toolbar-item"><span class="fa-solid fa-square"></span></button>
+                    <button onclick="AddCircle();" class="toolbar-item"><span class="fa-solid fa-circle"></span></button>
+                    <button onclick="AddTriangle();" class="toolbar-item"><span class="fa-solid fa-play"></span></button>
+                </div>
             </div>
             <button onclick="AddText();" class="toolbar-item"><span class="fa-solid fa-t"></span></button>
             <button onclick="AddImage();" class="toolbar-item"><span class="fa-solid fa-image"></span></button>
-            <button onclick="DeleteItem();" class="toolbar-item"><span class="fa-solid fa-trash"></span></button>
+            <div class="ui-expand-container">
+                <button onclick="ConfirmDelete();" class="toolbar-item"><span class="fa-solid fa-trash"></span></button>
+                <div id="confirm-delete" class="ui-element ui-expand hidden">
+                    <button onclick="DeleteItem();" class="toolbar-item"><span class="fa-solid fa-check"></span></button>
+                    <button onclick="CancelDelete();" class="toolbar-item"><span class="fa-solid fa-times"></span></button>
+                </div>
+            </div>
         </div>
         <canvas id="canvas" width="500" height="500"></canvas>
     </main>
