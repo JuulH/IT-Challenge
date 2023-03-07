@@ -14,7 +14,12 @@
     <main>
         <div id="toolbar">
             <button class="toolbar-item"><span class="fa-solid fa-brush"></span></button>
-            <button onclick="AddRect();" class="toolbar-item"><span class="fa-solid fa-square"></span></button>
+            <button onclick="ToggleDropdown();" class="toolbar-item"><span class="fa-solid fa-star"></span><span class="toolbar-more fa-solid fa-angle-right"></span></button>
+            <div id="shape-dropdown" class="hidden">
+                <button onclick="AddSquare();" class="toolbar-item"><span class="fa-solid fa-square"></span></button>
+                <button onclick="AddCircle();" class="toolbar-item"><span class="fa-solid fa-circle"></span></button>
+                <button onclick="AddTriangle();" class="toolbar-item"><span class="fa-solid fa-play"></span></button>
+            </div>
             <button onclick="AddText();" class="toolbar-item"><span class="fa-solid fa-t"></span></button>
             <button onclick="AddImage();" class="toolbar-item"><span class="fa-solid fa-image"></span></button>
             <button onclick="DeleteItem();" class="toolbar-item"><span class="fa-solid fa-trash"></span></button>

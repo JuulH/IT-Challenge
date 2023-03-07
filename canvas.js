@@ -1,5 +1,6 @@
 const DOMCanvas = document.getElementById('canvas');
 const toolbar = document.getElementById('toolbar');
+const shapeDropdown = document.getElementById('shape-dropdown');
 
 const pageWidth  = Math.max(document.documentElement.clientWidth,  window.innerWidth  || 0);
 const pageHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);  
@@ -12,8 +13,37 @@ const canvas = new fabric.Canvas('canvas', {
     height: canvasHeight
 });
 
-function AddRect() {
+function ToggleDropdown() {
+    shapeDropdown.classList.toggle('hidden');
+}
+
+function AddSquare() {
     let rect = new fabric.Rect({
+        width: 100,
+        height: 100,
+        originX: 'center',
+        originY: 'center',
+        top: canvas.height / 2,
+        left: canvas.width / 2,
+        fill: 'red',
+    })
+    canvas.add(rect);
+}
+
+function AddCircle() {
+    let circle = new fabric.Circle({
+        radius: 50,
+        originX: 'center',
+        originY: 'center',
+        top: canvas.height / 2,
+        left: canvas.width / 2,
+        fill: 'red',
+    })
+    canvas.add(circle);
+}
+
+function AddTriangle() {
+    let rect = new fabric.Triangle({
         width: 100,
         height: 100,
         originX: 'center',

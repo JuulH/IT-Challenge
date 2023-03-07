@@ -18,6 +18,7 @@ main {
 }
 
 #toolbar {
+    position: relative;
     margin-left: 2rem;
     display: flex;
     flex-direction: column;
@@ -30,7 +31,7 @@ main {
     gap: 1rem;
 }
 
-#toolbar > .toolbar-item {
+.toolbar-item {
     font-size: 2rem;
     opacity: .7;
     background-color: white;
@@ -44,10 +45,41 @@ main {
     border: none;
 }
 
-#toolbar > .toolbar-item:hover {
+.toolbar-item:hover {
     background-color: #f3f3f3;
 }
 
-#toolbar > .toolbar-item:active {
+.toolbar-item:active {
     background-color: #dddddd;
+}
+
+.toolbar-item:has(.toolbar-more) {
+    position: relative;
+}
+
+.toolbar-item > .toolbar-more {
+    font-size: 1rem;
+    opacity: .7;
+    position: absolute;
+    bottom: 2rem;
+    right: .5rem;
+}
+
+#shape-dropdown {
+    z-index: 99;
+    padding: .75rem;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    border: 2px solid darkgray;
+    border-radius: 1rem 1rem 1rem 1rem;
+    right: -7.5rem;
+    top: 0rem;
+}
+
+.hidden {
+    display: none!important;
 }
