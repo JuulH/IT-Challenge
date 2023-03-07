@@ -48,6 +48,6 @@ main {
     background-color: #f3f3f3;
 }
 
-#toolbar > .toolbar-item:focus {
-    background-color: #c0c0c0;
+#toolbar > .toolbar-item:active {
+    background-color: #dddddd;
 }

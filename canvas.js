@@ -12,7 +12,6 @@ const canvas = new fabric.Canvas('canvas', {
     height: canvasHeight
 });
 
-
 function AddRect() {
     let rect = new fabric.Rect({
         width: 100,
@@ -34,4 +33,8 @@ function AddText() {
             left: canvas.width / 2,
             top: canvas.height / 2,
     }));
+}
+
+function DeleteItem() {
+    canvas.remove(canvas.getActiveObject());
 }
