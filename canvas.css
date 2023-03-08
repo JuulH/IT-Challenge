@@ -23,10 +23,6 @@ main {
     height: 100vh;
 }
 
-.canvas-container {
-    aspect-ratio: 10 / 15;
-}
-
 /* UI Elements */
 .ui-element {
     border: 2px solid darkgray;

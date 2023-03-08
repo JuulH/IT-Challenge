@@ -18,23 +18,31 @@ const canvasHeight = pageHeight - canvasInset;
 // Create canvas
 const canvas = new fabric.Canvas('canvas', {
     width: canvasWidth,
-    height: canvasHeight
+    height: canvasHeight,
+    preserveObjectStacking: false
 });
 
 // Postcard size (in mm)
+const PPI = 300; // Pixels per inch (300 is standard for printing)
 const postcardWidth = 100;
 const postcardHeight = 100;
 const aspectRatio = postcardWidth / postcardHeight;
+let cssWidth = canvasWidth;
+let cssHeight = canvasHeight;
+const mmToInch = 1 / 25.4;
 
 if(aspectRatio >= pageAspectRatio) {
     // Postcard is wider than page
-    canvas.setWidth(canvasWidth);
-    canvas.setHeight(canvasWidth / aspectRatio);
+    cssHeight = canvasWidth / aspectRatio;
 } else {
-    // Postcard is taller than page
-    canvas.setHeight(canvasHeight);
-    canvas.setWidth(canvasHeight * aspectRatio);
+    cssWidth = canvasHeight * aspectRatio;
 }
+
+// Set canvas size
+canvas.setWidth(postcardWidth * mmToInch * PPI);
+canvas.setHeight(postcardHeight * mmToInch * PPI);
+
+canvas.setDimensions({width: `${cssWidth}px`, height: `${cssHeight}px`}, {cssOnly: true});
 
 // Add shapes
 function ToggleDropdown() {
