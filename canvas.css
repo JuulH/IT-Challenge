@@ -75,6 +75,10 @@ main {
     right: -1rem;
 }
 
+.hidden {
+    display: none !important;
+}
+
 .ui-expand-container {
     position: relative;
     display: flex;
@@ -101,8 +105,4 @@ main {
     flex-direction: row;
     gap: .5rem;
     right: -14rem;
-}
-
-.hidden {
-    display: none!important;
 }

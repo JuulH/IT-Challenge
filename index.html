@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,10 +11,12 @@
     <script src="https://kit.fontawesome.com/74cb3809fb.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="canvas.css">
 </head>
+
 <body>
     <main>
         <div id="toolbar" class="ui-element">
             <button class="toolbar-item"><span class="fa-solid fa-brush"></span></button>
+
             <div class="ui-expand-container">
                 <button onclick="ToggleDropdown();" class="toolbar-item"><span class="fa-solid fa-star"><span class="toolbar-more fa-solid fa-angle-right"></span></span></button>
                 <div id="shape-dropdown" class="ui-element ui-expand hidden">
@@ -22,8 +25,11 @@
                     <button onclick="AddTriangle();" class="toolbar-item"><span class="fa-solid fa-play"></span></button>
                 </div>
             </div>
+
             <button onclick="AddText();" class="toolbar-item"><span class="fa-solid fa-t"></span></button>
+
             <button onclick="AddImage();" class="toolbar-item"><span class="fa-solid fa-image"></span></button>
+
             <div class="ui-expand-container">
                 <button onclick="ConfirmDelete();" class="toolbar-item"><span class="fa-solid fa-trash"></span></button>
                 <div id="confirm-delete" class="ui-element ui-expand hidden">
@@ -31,7 +37,9 @@
                     <button onclick="CancelDelete();" class="toolbar-item"><span class="fa-solid fa-times"></span></button>
                 </div>
             </div>
+            
         </div>
+
         <canvas id="canvas" width="500" height="500"></canvas>
     </main>
     

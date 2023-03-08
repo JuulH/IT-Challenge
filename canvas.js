@@ -11,7 +11,7 @@ const pageHeight = Math.max(document.documentElement.clientHeight, window.innerH
 const pageAspectRatio = pageWidth / pageHeight;
 
 // Usable canvas size (in pixels)
-const canvasInset = 100; // In pixels
+const canvasInset = 100; // Margin around canvas (in pixels)
 const canvasWidth  = pageWidth - toolbar.offsetWidth - parseFloat(getComputedStyle(toolbar)['margin-right']) - canvasInset;
 const canvasHeight = pageHeight - canvasInset;  
 
