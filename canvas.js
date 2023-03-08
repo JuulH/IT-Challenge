@@ -23,8 +23,11 @@ const canvas = new fabric.Canvas('canvas', {
 });
 
 // Postcard size (in mm)
-const postcardWidth = 100;
-const postcardHeight = 100;
+const postcardMargins = 3; // Cutting margins around postcard (in mm)
+let postcardWidth = 100;
+let postcardHeight = 100;
+postcardWidth += postcardMargins * 2;
+postcardHeight += postcardMargins * 2;
 const aspectRatio = postcardWidth / postcardHeight;
 
 const PPI = 300; // Pixels per inch (300 is standard for printing)

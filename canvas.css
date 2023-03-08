@@ -43,7 +43,6 @@ main {
 
 .toolbar-item {
     font-size: 2rem;
-    opacity: .7;
     background-color: transparent;
     width: 5rem;
     height: 5rem;
@@ -53,6 +52,7 @@ main {
     border-radius: 50%;
     margin: 0.1rem;
     border: none;
+    color: #4f4f4f;
 }
 
 .toolbar-item:hover {
@@ -98,6 +98,10 @@ main {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+}
+
+#trash {
+    color: rgb(200, 50, 50);
 }
 
 #confirm-delete {
