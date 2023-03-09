@@ -4,6 +4,9 @@ const toolbar = document.getElementById('toolbar');
 const shapeDropdown = document.getElementById('shape-dropdown');
 const shapeDropdownArrow = document.getElementsByClassName('toolbar-more')[0];
 const confirmDelete = document.getElementById('confirm-delete');
+const colorPicker = document.getElementById('color-input');
+const colorContainer = document.getElementById('color-picker');
+const colorIcon = document.getElementById('color');
 
 // Get page size (in pixels)
 const pageWidth  = Math.max(document.documentElement.clientWidth,  window.innerWidth  || 0);
@@ -66,9 +69,10 @@ function AddSquare() {
         originY: 'center',
         top: canvas.height / 2,
         left: canvas.width / 2,
-        fill: 'red',
+        fill: `${currentColor}`,
     })
     canvas.add(rect);
+    ToggleDropdown();
 }
 
 function AddCircle() {
@@ -78,9 +82,10 @@ function AddCircle() {
         originY: 'center',
         top: canvas.height / 2,
         left: canvas.width / 2,
-        fill: 'red',
+        fill: `${currentColor}`,
     })
     canvas.add(circle);
+    ToggleDropdown();
 }
 
 function AddTriangle() {
@@ -91,9 +96,10 @@ function AddTriangle() {
         originY: 'center',
         top: canvas.height / 2,
         left: canvas.width / 2,
-        fill: 'red',
+        fill: `${currentColor}`,
     })
     canvas.add(rect);
+    ToggleDropdown();
 }
 
 function AddText() {
@@ -103,6 +109,7 @@ function AddText() {
             originY: 'center',
             left: canvas.width / 2,
             top: canvas.height / 2,
+            fill: `${currentColor}`,
     }));
 }
 
@@ -119,3 +126,33 @@ function DeleteItem() {
 function CancelDelete() {
     confirmDelete.classList.add('hidden');
 }
+
+// Set color
+let currentColor = 'black';
+colorIcon.style.color = currentColor;
+
+function SelectColor() {
+    colorContainer.classList.toggle('hidden');
+    if (!colorContainer.classList.contains('hidden')) {
+        colorPicker.focus();
+        colorPicker.click();
+    }
+}
+
+function SetColor(color) {
+    currentColor = color;
+    colorIcon.style.color = color;
+    let activeObjects = canvas.getActiveObjects();
+    activeObjects.forEach(object => {
+        object.set({ fill: `${currentColor}`});
+    });
+    canvas.renderAll();
+}
+
+colorPicker.addEventListener('input', (event) => {
+    SetColor(event.target.value);
+});
+
+colorPicker.addEventListener('blur', () => {
+    colorContainer.classList.add('hidden');
+});
