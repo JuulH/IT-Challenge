@@ -15,10 +15,10 @@
 <body>
     <main>
         <div id="toolbar" class="ui-element">
-            <button class="toolbar-item"><span class="fa-solid fa-brush"></span></button>
+            <button class="toolbar-item"><span class="fa-solid fa-paintbrush"></span></button>
 
             <div class="ui-expand-container">
-                <button onclick="ToggleDropdown();" class="toolbar-item"><span class="fa-solid fa-star"><span class="toolbar-more fa-solid fa-angle-right"></span></span></button>
+                <button onclick="ToggleDropdown();" class="toolbar-item"><span class="fa-solid fa-shapes"><span class="toolbar-more fa-solid fa-angle-right"></span></span></button>
                 <div id="shape-dropdown" class="ui-element ui-expand hidden">
                     <button onclick="AddSquare();" class="toolbar-item"><span class="fa-solid fa-square"></span></button>
                     <button onclick="AddCircle();" class="toolbar-item"><span class="fa-solid fa-circle"></span></button>
@@ -35,6 +35,13 @@
                 <div id="confirm-delete" class="ui-element ui-expand hidden">
                     <button onclick="DeleteItem();" class="toolbar-item"><span class="fa-solid fa-check"></span></button>
                     <button onclick="CancelDelete();" class="toolbar-item"><span class="fa-solid fa-times"></span></button>
+                </div>
+            </div>
+
+            <div class="ui-expand-container">
+                <button onclick="SelectColor();" id="color" class="toolbar-item"><span class="fa-solid fa-circle-dot"></span></button>
+                <div id="color-picker" class="ui-element ui-expand hidden">
+                    <input type="color" id="color-input" value="#000000">
                 </div>
             </div>
             

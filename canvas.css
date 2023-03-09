@@ -72,7 +72,7 @@ main {
     opacity: .7;
     position: absolute;
     bottom: .3rem;
-    right: -1rem;
+    right: -1.1rem;
 }
 
 .hidden {
@@ -101,7 +101,7 @@ main {
 }
 
 #trash {
-    color: rgb(200, 50, 50);
+    color: rgb(200, 70, 70);
 }
 
 #confirm-delete {
