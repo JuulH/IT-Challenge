@@ -1,9 +1,7 @@
 // Get DOM elements
 const DOMCanvas = document.getElementById('canvas');
 const toolbar = document.getElementById('toolbar');
-const shapeDropdown = document.getElementById('shape-dropdown');
 const shapeDropdownArrow = document.getElementsByClassName('toolbar-more')[0];
-const confirmDelete = document.getElementById('confirm-delete');
 const colorPicker = document.getElementById('color-input');
 const colorContainer = document.getElementById('color-picker');
 const colorIcon = document.getElementById('color');
@@ -54,9 +52,36 @@ canvas.setHeight(postcardHeight * mmToInch * PPI);
 // Set canvas CSS size
 canvas.setDimensions({width: `${cssWidth}px`, height: `${cssHeight}px`}, {cssOnly: true});
 
+// UI Control
+function ToggleHide(element, fn) {
+    let elementToHide = document.getElementById(element);
+    elementToHide.classList.toggle('hidden');
+
+    if (fn) {
+        fn();
+    }
+}
+
+function Unhide(element, fn) {
+    let elementToHide = document.getElementById(element);
+    elementToHide.classList.remove('hidden');
+
+    if (fn) {
+        fn();
+    }
+}
+
+function Hide(element, fn) {
+    let elementToHide = document.getElementById(element);
+    elementToHide.classList.add('hidden');
+
+    if (fn) {
+        fn();
+    }
+}
+
 // Add shapes
-function ToggleDropdown() {
-    shapeDropdown.classList.toggle('hidden');
+function DropdownArrow() {
     shapeDropdownArrow.classList.toggle('fa-angle-right');
     shapeDropdownArrow.classList.toggle('fa-angle-left');
 }
@@ -72,7 +97,7 @@ function AddSquare() {
         fill: `${currentColor}`,
     })
     canvas.add(rect);
-    ToggleDropdown();
+    Hide('shape-dropdown');
 }
 
 function AddCircle() {
@@ -85,7 +110,7 @@ function AddCircle() {
         fill: `${currentColor}`,
     })
     canvas.add(circle);
-    ToggleDropdown();
+    Hide('shape-dropdown');
 }
 
 function AddTriangle() {
@@ -99,7 +124,7 @@ function AddTriangle() {
         fill: `${currentColor}`,
     })
     canvas.add(rect);
-    ToggleDropdown();
+    Hide('shape-dropdown');
 }
 
 function AddText() {
@@ -115,38 +140,40 @@ function AddText() {
 }
 
 // Delete items
-function ConfirmDelete() {
-    confirmDelete.classList.remove('hidden');
-}
-
 function DeleteItem() {
-    canvas.remove(canvas.getActiveObject());
-    confirmDelete.classList.add('hidden');
-}
+    Hide('confirm-delete');
+    
+    let selectedObjects = canvas.getActiveObjects();
+    selectedObjects.forEach(object => {
+        canvas.remove(object);
+    });
 
-function CancelDelete() {
-    confirmDelete.classList.add('hidden');
+    canvas.discardActiveObject(); // Deselect objects
+    canvas.renderAll();
 }
 
 // Set color
 let currentColor = 'black';
 colorIcon.style.color = currentColor;
 
-function SelectColor() {
-    colorContainer.classList.toggle('hidden');
-    if (!colorContainer.classList.contains('hidden')) {
-        colorPicker.focus();
-        colorPicker.click();
-    }
+function OpenPicker() {
+    setTimeout(() => {
+        if (!colorContainer.classList.contains('hidden')) {
+            colorPicker.focus();
+            colorPicker.click();
+        }
+    }, 0);
 }
 
 function SetColor(color) {
     currentColor = color;
     colorIcon.style.color = color;
+
     let activeObjects = canvas.getActiveObjects();
     activeObjects.forEach(object => {
         object.set({ fill: `${currentColor}`});
     });
+
     canvas.renderAll();
 }
 
@@ -155,5 +182,5 @@ colorPicker.addEventListener('input', (event) => {
 });
 
 colorPicker.addEventListener('blur', () => {
-    colorContainer.classList.add('hidden');
+    Hide('color-picker');
 });
