@@ -104,12 +104,13 @@ function AddTriangle() {
 
 function AddText() {
     canvas.add(new fabric.IText('Tap and Type', { 
-        fontFamily: 'Comic Sans MS',
+        fontFamily: 'Helvetica',
             originX: 'center',
             originY: 'center',
             left: canvas.width / 2,
             top: canvas.height / 2,
             fill: `${currentColor}`,
+            fontSize: 100,
     }));
 }
 
