@@ -97,7 +97,8 @@ function AddSquare() {
         fill: `${currentColor}`,
     })
     canvas.add(rect);
-    Hide('shape-dropdown');
+    canvas.renderAll();
+    Hide('shape-dropdown', DropdownArrow);
 }
 
 function AddCircle() {
@@ -110,7 +111,8 @@ function AddCircle() {
         fill: `${currentColor}`,
     })
     canvas.add(circle);
-    Hide('shape-dropdown');
+    canvas.renderAll();
+    Hide('shape-dropdown', DropdownArrow);
 }
 
 function AddTriangle() {
@@ -124,7 +126,8 @@ function AddTriangle() {
         fill: `${currentColor}`,
     })
     canvas.add(rect);
-    Hide('shape-dropdown');
+    canvas.renderAll();
+    Hide('shape-dropdown', DropdownArrow);
 }
 
 function AddText() {
@@ -137,10 +140,38 @@ function AddText() {
             fill: `${currentColor}`,
             fontSize: 100,
     }));
+    canvas.renderAll();
+}
+
+function AddImage(url) {
+    fabric.Image.fromURL(url, function(img) {
+        let imgWidth = img.width;
+        let imgHeight = img.height;
+        let aspectRatio = imgWidth / imgHeight;
+
+        if (aspectRatio >= 1) {
+            // Image is wider than it is tall
+            img.scaleToWidth(canvas.width / 2);
+        } else {
+            // Image is taller than it is wide
+            img.scaleToHeight(canvas.height / 2);
+        }
+        
+        img.set({
+            originX: 'center',
+            originY: 'center',
+            top: canvas.height / 2,
+            left: canvas.width / 2,
+        });
+        canvas.add(img);
+        canvas.renderAll();
+    });
+
+    Hide('image-dropdown');
 }
 
 // Delete items
-function DeleteItem() {
+function DeleteObject() {
     Hide('confirm-delete');
     
     let selectedObjects = canvas.getActiveObjects();

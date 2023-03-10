@@ -110,3 +110,57 @@ main {
     gap: .5rem;
     right: -14rem;
 }
+
+/* Images */
+#image-dropdown {
+    right: -22.25rem;
+}
+
+#image-dropdown p {
+    text-align: center;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: .5rem;
+}
+
+#qrcode {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+#images-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .5rem;
+}
+
+.image-button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    position: relative;
+}
+
+.image-button::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0);
+    transition: background-color 0.15s ease;
+}
+
+.image-button:hover::after {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.image-single {
+    width: 150px;
+    height: 125px;
+    object-fit: cover;
+}

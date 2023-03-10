@@ -9,6 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/fabric"></script>
     <script defer src="canvas.js"></script>
     <script src="https://kit.fontawesome.com/74cb3809fb.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
     <link rel="stylesheet" href="canvas.css">
 </head>
 
@@ -18,7 +19,7 @@
             <button class="toolbar-item"><span class="fa-solid fa-paintbrush"></span></button>
 
             <div class="ui-expand-container">
-                <button onclick="ToggleHide('shape-dropdown', DropdownArrow());" class="toolbar-item"><span class="fa-solid fa-shapes"><span class="toolbar-more fa-solid fa-angle-right"></span></span></button>
+                <button onclick="ToggleHide('shape-dropdown', DropdownArrow);" class="toolbar-item"><span class="fa-solid fa-shapes"><span class="toolbar-more fa-solid fa-angle-right"></span></span></button>
                 <div id="shape-dropdown" class="ui-element ui-expand hidden">
                     <button onclick="AddSquare();" class="toolbar-item"><span class="fa-solid fa-square"></span></button>
                     <button onclick="AddCircle();" class="toolbar-item"><span class="fa-solid fa-circle"></span></button>
@@ -28,18 +29,49 @@
 
             <button onclick="AddText();" class="toolbar-item"><span class="fa-solid fa-t"></span></button>
 
-            <button onclick="AddImage();" class="toolbar-item"><span class="fa-solid fa-image"></span></button>
+            <div class="ui-expand-container">
+                <button onclick="ToggleHide('image-dropdown');" class="toolbar-item"><span class="fa-solid fa-image"></span></button>
+                <div id="image-dropdown" class="ui-element ui-expand hidden">
+                    <p id="new-image-title">Afbeelding toevoegen</p>
+                    <div id="qrcode"></div>
+                    <script type="text/javascript">
+                        new QRCode(document.getElementById("qrcode"), {
+                            text: "https://www.femkereuvers.shop/",
+                            width: 128,
+                            height: 128,
+                        });
+                    </script>
+                    
+                    <p id="gallery-title">Fotogalerij</p>
+                    <div id="images-container">
+                        <button class="image-button" onclick="AddImage('https://www.femkereuvers.shop/media/logo/stores/1/logo_met_onderschrift.png')">
+                            <img src="https://www.femkereuvers.shop/media/logo/stores/1/logo_met_onderschrift.png" class="image-single">
+                        </button>
+                        <button class="image-button" onclick="AddImage('https://www.femkereuvers.shop/media/logo/stores/1/logo_met_onderschrift.png')">
+                            <img src="https://www.femkereuvers.shop/media/logo/stores/1/logo_met_onderschrift.png" class="image-single">
+                        </button>
+                        <button class="image-button"
+                            onclick="AddImage('https://www.femkereuvers.shop/media/logo/stores/1/logo_met_onderschrift.png')">
+                            <img src="https://www.femkereuvers.shop/media/logo/stores/1/logo_met_onderschrift.png" class="image-single">
+                        </button>
+                        <button class="image-button"
+                            onclick="AddImage('https://www.femkereuvers.shop/media/logo/stores/1/logo_met_onderschrift.png')">
+                            <img src="https://www.femkereuvers.shop/media/logo/stores/1/logo_met_onderschrift.png" class="image-single">
+                        </button>
+                    </div>
+                </div>
+            </div>
 
             <div class="ui-expand-container">
                 <button onclick="Unhide('confirm-delete');" id="trash" class="toolbar-item"><span class="fa-solid fa-trash"></span></button>
                 <div id="confirm-delete" class="ui-element ui-expand hidden">
-                    <button onclick="DeleteItem();" class="toolbar-item"><span class="fa-solid fa-check"></span></button>
+                    <button onclick="DeleteObject();" class="toolbar-item"><span class="fa-solid fa-check"></span></button>
                     <button onclick="Hide('confirm-delete');" class="toolbar-item"><span class="fa-solid fa-times"></span></button>
                 </div>
             </div>
 
             <div class="ui-expand-container">
-                <button onclick="ToggleHide('color-picker', OpenPicker());" id="color" class="toolbar-item"><span class="fa-solid fa-circle-dot"></span></button>
+                <button onclick="ToggleHide('color-picker', OpenPicker);" id="color" class="toolbar-item"><span class="fa-solid fa-circle-dot"></span></button>
                 <div id="color-picker" class="ui-element ui-expand hidden">
                     <input type="color" id="color-input" value="#000000">
                 </div>
@@ -49,12 +81,5 @@
 
         <canvas id="canvas" width="500" height="500"></canvas>
     </main>
-    
-    <!--<script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
-    <div id="qrcode"></div>
-    <script type="text/javascript">
-    new QRCode(document.getElementById("qrcode"), "https://www.femkereuvers.shop/");
-    </script>-->
-
 </body>
 </html>
