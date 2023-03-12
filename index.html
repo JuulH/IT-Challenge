@@ -16,8 +16,7 @@
 <body>
     <main>
         <div id="toolbar" class="ui-element">
-            <button class="toolbar-item"><span class="fa-solid fa-paintbrush"></span></button>
-
+            <!-- Shape picker -->
             <div class="ui-expand-container">
                 <button onclick="ToggleHide('shape-dropdown', DropdownArrow);" class="toolbar-item"><span class="fa-solid fa-shapes"><span class="toolbar-more fa-solid fa-angle-right"></span></span></button>
                 <div id="shape-dropdown" class="ui-element ui-expand hidden">
@@ -27,13 +26,23 @@
                 </div>
             </div>
 
+            <!-- Text -->
             <button onclick="AddText();" class="toolbar-item"><span class="fa-solid fa-t"></span></button>
 
+            <!-- Images -->
             <div class="ui-expand-container">
                 <button onclick="ToggleHide('image-dropdown');" class="toolbar-item"><span class="fa-solid fa-image"></span></button>
                 <div id="image-dropdown" class="ui-element ui-expand hidden">
-                    <p id="new-image-title">Afbeelding toevoegen</p>
-                    <div id="qrcode"></div>
+                    
+                    <div id="gallery-header">
+                        <p id="gallery-title">Fotogalerij</p>
+                        <div id="gallery-buttons">
+                            <button onclick="ToggleHide('qrcode')"><span class="fa-solid fa-plus"></span></button>
+                            <button><span class="fa-solid fa-arrows-rotate"></span></button>
+                        </div>
+                    </div>
+
+                    <div id="qrcode" class="hidden"></div>
                     <script type="text/javascript">
                         new QRCode(document.getElementById("qrcode"), {
                             text: "https://www.femkereuvers.shop/",
@@ -41,8 +50,7 @@
                             height: 128,
                         });
                     </script>
-                    
-                    <p id="gallery-title">Fotogalerij</p>
+
                     <div id="images-container">
                         <button class="image-button" onclick="AddImage('https://www.femkereuvers.shop/media/logo/stores/1/logo_met_onderschrift.png')">
                             <img src="https://www.femkereuvers.shop/media/logo/stores/1/logo_met_onderschrift.png" class="image-single">
@@ -50,18 +58,38 @@
                         <button class="image-button" onclick="AddImage('https://www.femkereuvers.shop/media/logo/stores/1/logo_met_onderschrift.png')">
                             <img src="https://www.femkereuvers.shop/media/logo/stores/1/logo_met_onderschrift.png" class="image-single">
                         </button>
-                        <button class="image-button"
-                            onclick="AddImage('https://www.femkereuvers.shop/media/logo/stores/1/logo_met_onderschrift.png')">
+                        <button class="image-button" onclick="AddImage('https://www.femkereuvers.shop/media/logo/stores/1/logo_met_onderschrift.png')">
                             <img src="https://www.femkereuvers.shop/media/logo/stores/1/logo_met_onderschrift.png" class="image-single">
                         </button>
-                        <button class="image-button"
-                            onclick="AddImage('https://www.femkereuvers.shop/media/logo/stores/1/logo_met_onderschrift.png')">
+                        <button class="image-button" onclick="AddImage('https://www.femkereuvers.shop/media/logo/stores/1/logo_met_onderschrift.png')">
                             <img src="https://www.femkereuvers.shop/media/logo/stores/1/logo_met_onderschrift.png" class="image-single">
                         </button>
                     </div>
                 </div>
             </div>
 
+            <!-- Stickers -->
+            <div class="ui-expand-container">
+                <button onclick="ToggleHide('sticker-dropdown');" class="toolbar-item"><span class="fa-solid fa-note-sticky"></span></button>
+                <div id="sticker-dropdown" class="ui-element ui-expand hidden">
+                    <div id="images-container">
+                        <button onclick="AddImage('https://www.femkereuvers.shop/media/logo/stores/1/logo_met_onderschrift.png')" class="image-button">
+                            <img src="https://www.femkereuvers.shop/media/logo/stores/1/logo_met_onderschrift.png" class="sticker-single">
+                        </button>
+                        <button onclick="AddImage('https://www.femkereuvers.shop/media/logo/stores/1/logo_met_onderschrift.png')" class="image-button">
+                            <img src="https://unsplash.it/500/500" class="sticker-single">
+                        </button>
+                        <button onclick="AddImage('https://www.femkereuvers.shop/media/logo/stores/1/logo_met_onderschrift.png')" class="image-button">
+                            <img src="https://unsplash.it/400/800" class="sticker-single">
+                        </button>
+                        <button onclick="AddImage('https://www.femkereuvers.shop/media/logo/stores/1/logo_met_onderschrift.png')" class="image-button">
+                            <img src="https://unsplash.it/600/450" class="sticker-single">
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trash -->
             <div class="ui-expand-container">
                 <button onclick="Unhide('confirm-delete');" id="trash" class="toolbar-item"><span class="fa-solid fa-trash"></span></button>
                 <div id="confirm-delete" class="ui-element ui-expand hidden">
@@ -70,6 +98,7 @@
                 </div>
             </div>
 
+            <!-- Color picker -->
             <div class="ui-expand-container">
                 <button onclick="ToggleHide('color-picker', OpenPicker);" id="color" class="toolbar-item"><span class="fa-solid fa-circle-dot"></span></button>
                 <div id="color-picker" class="ui-element ui-expand hidden">
