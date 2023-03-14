@@ -16,12 +16,69 @@ const canvasInset = 100; // Margin around canvas (in pixels)
 const canvasWidth  = pageWidth - toolbar.offsetWidth - parseFloat(getComputedStyle(toolbar)['margin-right']) - canvasInset;
 const canvasHeight = pageHeight - canvasInset;  
 
-// Create canvas
+// Create canvas & configuration
 const canvas = new fabric.Canvas('canvas', {
     width: canvasWidth,
     height: canvasHeight,
-    preserveObjectStacking: false
+    preserveObjectStacking: true
 });
+
+fabric.Object.prototype.transparentCorners = false;
+fabric.Object.prototype.cornerColor = 'blue';
+fabric.Object.prototype.cornerStyle = 'circle';
+fabric.Object.prototype.borderColor = 'blue';
+
+var layerUpIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path fill="${fabric.Object.prototype.cornerColor}" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM377 271c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-87-87-87 87c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9L239 167c9.4-9.4 24.6-9.4 33.9 0L377 271z"/></svg>`;
+var layerUpImg = document.createElement('img');
+layerUpImg.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(layerUpIcon);
+
+var layerDownIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path fill="${fabric.Object.prototype.cornerColor}" d="M256 0a256 256 0 1 0 0 512A256 256 0 1 0 256 0zM135 241c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l87 87 87-87c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9L273 345c-9.4 9.4-24.6 9.4-33.9 0L135 241z"/></svg>`;
+var layerDownImg = document.createElement('img');
+layerDownImg.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(layerDownIcon);
+
+function moveLayer(transform, forward) {
+    var target = transform.target;
+    var canvas = target.canvas;
+
+    if (forward) {
+        canvas.bringForward(target);
+    } else {
+        canvas.sendBackwards(target);
+    }
+}
+
+fabric.Object.prototype.controls.layerUp = new fabric.Control({
+    x: 0.5,
+    y: 0,
+    offsetX: 16,
+    offsetY: -24,
+    cursorStyle: 'pointer',
+    mouseUpHandler: function(eventData, transform) { moveLayer(transform, true); },
+    render: renderIcon(layerUpImg),
+    cornerSize: 24
+});
+
+fabric.Object.prototype.controls.layerDown = new fabric.Control({
+    x: 0.5,
+    y: 0,
+    offsetX: 16,
+    offsetY: 24,
+    cursorStyle: 'pointer',
+    mouseUpHandler: function (eventData, transform) { moveLayer(transform, false); },
+    render: renderIcon(layerDownImg),
+    cornerSize: 24
+});
+
+function renderIcon(icon) {
+    return function renderIcon(ctx, left, top, fabricObject) {
+        var size = this.cornerSize;
+        ctx.save();
+        ctx.translate(left, top);
+        ctx.rotate(fabric.util.degreesToRadians(fabricObject.angle));
+        ctx.drawImage(icon, -size / 2, -size / 2, size, size);
+        ctx.restore();
+    }
+}
 
 // Postcard size (in mm)
 const postcardMargins = 3; // Cutting margins around postcard (in mm)
@@ -87,6 +144,13 @@ function Unhide(element, fn, hideAll) {
         for (element of elementsToHide) {
             if (element.id != elementToHide.id) {
                 element.classList.add('hidden');
+
+                // Close dropdown arrow (slightly funky)
+                let toolbarMore = element.previousElementSibling.firstChild.firstChild;
+                if (toolbarMore && toolbarMore.classList.contains('toolbar-more')) {
+                    element.previousElementSibling.firstChild.firstChild.classList.remove('fa-angle-left');
+                    element.previousElementSibling.firstChild.firstChild.classList.add('fa-angle-right');
+                }
             }
         }
     }
@@ -105,6 +169,13 @@ function Hide(element, fn, hideAll) {
         for (element of elementsToHide) {
             if (element.id != elementToHide.id) {
                 element.classList.add('hidden');
+
+                // Close dropdown arrow (slightly funky)
+                let toolbarMore = element.previousElementSibling.firstChild.firstChild;
+                if (toolbarMore && toolbarMore.classList.contains('toolbar-more')) {
+                    element.previousElementSibling.firstChild.firstChild.classList.remove('fa-angle-left');
+                    element.previousElementSibling.firstChild.firstChild.classList.add('fa-angle-right');
+                }
             }
         }
     }
@@ -165,14 +236,14 @@ function AddTriangle() {
 }
 
 function AddText() {
-    canvas.add(new fabric.IText('Tap and Type', { 
+    canvas.add(new fabric.IText('Dubbelklik om te typen', { 
         fontFamily: 'Helvetica',
             originX: 'center',
             originY: 'center',
             left: canvas.width / 2,
             top: canvas.height / 2,
             fill: `${currentColor}`,
-            fontSize: 100,
+            fontSize: 90,
     }));
     canvas.renderAll();
 }
