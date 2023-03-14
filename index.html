@@ -18,7 +18,7 @@
         <div id="toolbar" class="ui-element">
             <!-- Shape picker -->
             <div class="ui-expand-container">
-                <button onclick="ToggleHide('shape-dropdown', DropdownArrow);" class="toolbar-item"><span class="fa-solid fa-shapes"><span class="toolbar-more fa-solid fa-angle-right"></span></span></button>
+                <button onclick="ToggleHide('shape-dropdown', DropdownArrow, true);" class="toolbar-item"><span class="fa-solid fa-shapes"><span class="toolbar-more fa-solid fa-angle-right"></span></span></button>
                 <div id="shape-dropdown" class="ui-element ui-expand hidden">
                     <button onclick="AddSquare();" class="toolbar-item"><span class="fa-solid fa-square"></span></button>
                     <button onclick="AddCircle();" class="toolbar-item"><span class="fa-solid fa-circle"></span></button>
@@ -31,7 +31,7 @@
 
             <!-- Images -->
             <div class="ui-expand-container">
-                <button onclick="ToggleHide('image-dropdown');" class="toolbar-item"><span class="fa-solid fa-image"></span></button>
+                <button onclick="ToggleHide('image-dropdown', false, true);" class="toolbar-item"><span class="fa-solid fa-image"></span></button>
                 <div id="image-dropdown" class="ui-element ui-expand hidden">
                     
                     <div id="gallery-header">
@@ -70,9 +70,13 @@
 
             <!-- Stickers -->
             <div class="ui-expand-container">
-                <button onclick="ToggleHide('sticker-dropdown');" class="toolbar-item"><span class="fa-solid fa-note-sticky"></span></button>
+                <button onclick="ToggleHide('sticker-dropdown', false, true);" class="toolbar-item"><span class="fa-solid fa-note-sticky"></span></button>
                 <div id="sticker-dropdown" class="ui-element ui-expand hidden">
-                    <div id="images-container">
+                    <div id="sticker-header">
+                        <p id="sticker-title">Stickers</p>
+                    </div>
+                        
+                    <div id="sticker-container">
                         <button onclick="AddImage('https://www.femkereuvers.shop/media/logo/stores/1/logo_met_onderschrift.png')" class="image-button">
                             <img src="https://www.femkereuvers.shop/media/logo/stores/1/logo_met_onderschrift.png" class="sticker-single">
                         </button>
@@ -85,13 +89,25 @@
                         <button onclick="AddImage('https://www.femkereuvers.shop/media/logo/stores/1/logo_met_onderschrift.png')" class="image-button">
                             <img src="https://unsplash.it/600/450" class="sticker-single">
                         </button>
+                        <button onclick="AddImage('https://www.femkereuvers.shop/media/logo/stores/1/logo_met_onderschrift.png')" class="image-button">
+                            <img src="https://unsplash.it/500/450" class="sticker-single">
+                        </button>
+                        <button onclick="AddImage('https://www.femkereuvers.shop/media/logo/stores/1/logo_met_onderschrift.png')" class="image-button">
+                            <img src="https://unsplash.it/600/950" class="sticker-single">
+                        </button>
+                        <button onclick="AddImage('https://www.femkereuvers.shop/media/logo/stores/1/logo_met_onderschrift.png')" class="image-button">
+                            <img src="https://unsplash.it/200/200" class="sticker-single">
+                        </button>
+                        <button onclick="AddImage('https://www.femkereuvers.shop/media/logo/stores/1/logo_met_onderschrift.png')" class="image-button">
+                            <img src="https://unsplash.it/300/450" class="sticker-single">
+                        </button>
                     </div>
                 </div>
             </div>
 
             <!-- Trash -->
             <div class="ui-expand-container">
-                <button onclick="Unhide('confirm-delete');" id="trash" class="toolbar-item"><span class="fa-solid fa-trash"></span></button>
+                <button onclick="Unhide('confirm-delete', false, true);" id="trash" class="toolbar-item"><span class="fa-solid fa-trash"></span></button>
                 <div id="confirm-delete" class="ui-element ui-expand hidden">
                     <button onclick="DeleteObject();" class="toolbar-item"><span class="fa-solid fa-check"></span></button>
                     <button onclick="Hide('confirm-delete');" class="toolbar-item"><span class="fa-solid fa-times"></span></button>
@@ -100,7 +116,7 @@
 
             <!-- Color picker -->
             <div class="ui-expand-container">
-                <button onclick="ToggleHide('color-picker', OpenPicker);" id="color" class="toolbar-item"><span class="fa-solid fa-circle-dot"></span></button>
+                <button onclick="ToggleHide('color-picker', OpenPicker, true);" id="color" class="toolbar-item"><span class="fa-solid fa-circle-dot"></span></button>
                 <div id="color-picker" class="ui-element ui-expand hidden">
                     <input type="color" id="color-input" value="#000000">
                 </div>

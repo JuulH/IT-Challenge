@@ -53,27 +53,61 @@ canvas.setHeight(postcardHeight * mmToInch * PPI);
 canvas.setDimensions({width: `${cssWidth}px`, height: `${cssHeight}px`}, {cssOnly: true});
 
 // UI Control
-function ToggleHide(element, fn) {
+function ToggleHide(element, fn, hideAll) {
     let elementToHide = document.getElementById(element);
     elementToHide.classList.toggle('hidden');
 
+    if (hideAll) {
+        let elementsToHide = document.getElementsByClassName('ui-expand');
+        for (element of elementsToHide) {
+            if (element.id != elementToHide.id) {
+                element.classList.add('hidden');
+                
+                // Close dropdown arrow (slightly funky)
+                let toolbarMore = element.previousElementSibling.firstChild.firstChild;
+                if(toolbarMore && toolbarMore.classList.contains('toolbar-more')) {
+                    element.previousElementSibling.firstChild.firstChild.classList.remove('fa-angle-left');
+                    element.previousElementSibling.firstChild.firstChild.classList.add('fa-angle-right');
+                }
+            }
+        }
+    }
+
     if (fn) {
         fn();
     }
 }
 
-function Unhide(element, fn) {
+function Unhide(element, fn, hideAll) {
     let elementToHide = document.getElementById(element);
     elementToHide.classList.remove('hidden');
 
+    if (hideAll) {
+        let elementsToHide = document.getElementsByClassName('ui-expand');
+        for (element of elementsToHide) {
+            if (element.id != elementToHide.id) {
+                element.classList.add('hidden');
+            }
+        }
+    }
+
     if (fn) {
         fn();
     }
 }
 
-function Hide(element, fn) {
+function Hide(element, fn, hideAll) {
     let elementToHide = document.getElementById(element);
     elementToHide.classList.add('hidden');
+
+    if (hideAll) {
+        let elementsToHide = document.getElementsByClassName('ui-expand');
+        for (element of elementsToHide) {
+            if (element.id != elementToHide.id) {
+                element.classList.add('hidden');
+            }
+        }
+    }
 
     if (fn) {
         fn();
