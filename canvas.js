@@ -5,6 +5,8 @@ const shapeDropdownArrow = document.getElementsByClassName('toolbar-more')[0];
 const colorPicker = document.getElementById('color-input');
 const colorContainer = document.getElementById('color-picker');
 const colorIcon = document.getElementById('color');
+const trash = document.getElementById('trash-container');
+const trashChildren = Array.from(trash.getElementsByTagName("*"));
 
 // Get page size (in pixels)
 const pageWidth  = Math.max(document.documentElement.clientWidth,  window.innerWidth  || 0);
@@ -23,6 +25,7 @@ const canvas = new fabric.Canvas('canvas', {
     preserveObjectStacking: true
 });
 
+// Custom object selection
 fabric.Object.prototype.transparentCorners = false;
 fabric.Object.prototype.cornerColor = 'blue';
 fabric.Object.prototype.cornerStyle = 'circle';
@@ -80,10 +83,18 @@ function renderIcon(icon) {
     }
 }
 
+// Deselect object when clicking outside of canvas, except trash
+document.addEventListener('mousedown', function(event) {
+    if(event.target != canvas.upperCanvasEl && !trashChildren.includes(event.target)) {
+        canvas.discardActiveObject();
+        canvas.renderAll();
+    }
+});
+
 // Postcard size (in mm)
-const postcardMargins = 3; // Cutting margins around postcard (in mm)
 let postcardWidth = 100;
 let postcardHeight = 100;
+const postcardMargins = 3; // Cutting margins (in mm)
 postcardWidth += postcardMargins * 2;
 postcardHeight += postcardMargins * 2;
 const aspectRatio = postcardWidth / postcardHeight;
@@ -273,6 +284,7 @@ function AddImage(url) {
     });
 
     Hide('image-dropdown');
+    Hide('sticker-dropdown');
 }
 
 // Delete items
