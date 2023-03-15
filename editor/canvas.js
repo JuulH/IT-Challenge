@@ -3,10 +3,12 @@ const DOMCanvas = document.getElementById('canvas');
 const toolbar = document.getElementById('toolbar');
 const shapeDropdownArrow = document.getElementsByClassName('toolbar-more')[0];
 const colorPicker = document.getElementById('color-input');
-const colorContainer = document.getElementById('color-picker');
+const colorExpand = document.getElementById('color-picker');
+const colorContainer = document.getElementById('color-container');
 const colorIcon = document.getElementById('color');
 const trash = document.getElementById('trash-container');
 const trashChildren = Array.from(trash.getElementsByTagName("*"));
+const colorChildren = Array.from(colorContainer.getElementsByTagName("*"));
 
 // Get page size (in pixels)
 const pageWidth  = Math.max(document.documentElement.clientWidth,  window.innerWidth  || 0);
@@ -53,8 +55,8 @@ function moveLayer(transform, forward) {
 fabric.Object.prototype.controls.layerUp = new fabric.Control({
     x: 0.5,
     y: 0,
-    offsetX: 16,
-    offsetY: -24,
+    offsetX: 24,
+    offsetY: -22,
     cursorStyle: 'pointer',
     mouseUpHandler: function(eventData, transform) { moveLayer(transform, true); },
     render: renderIcon(layerUpImg),
@@ -64,8 +66,8 @@ fabric.Object.prototype.controls.layerUp = new fabric.Control({
 fabric.Object.prototype.controls.layerDown = new fabric.Control({
     x: 0.5,
     y: 0,
-    offsetX: 16,
-    offsetY: 24,
+    offsetX: 24,
+    offsetY: 22,
     cursorStyle: 'pointer',
     mouseUpHandler: function (eventData, transform) { moveLayer(transform, false); },
     render: renderIcon(layerDownImg),
@@ -85,7 +87,7 @@ function renderIcon(icon) {
 
 // Deselect object when clicking outside of canvas, except trash
 document.addEventListener('mousedown', function(event) {
-    if(event.target != canvas.upperCanvasEl && !trashChildren.includes(event.target)) {
+    if(event.target != canvas.upperCanvasEl && !trashChildren.includes(event.target) && !colorChildren.includes(event.target)) {
         canvas.discardActiveObject();
         canvas.renderAll();
     }
@@ -306,7 +308,7 @@ colorIcon.style.color = currentColor;
 
 function OpenPicker() {
     setTimeout(() => {
-        if (!colorContainer.classList.contains('hidden')) {
+        if (!colorExpand.classList.contains('hidden')) {
             colorPicker.focus();
             colorPicker.click();
         }
