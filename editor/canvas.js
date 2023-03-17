@@ -28,6 +28,9 @@ const canvas = new fabric.Canvas('canvas', {
     preserveObjectStacking: true
 });
 
+
+let activeImages = [];
+
 // Load images from server using AJAX
 function LoadImagesFromServer(target, buttonClass, imageClass, dir) {
     let xhr = new XMLHttpRequest();
@@ -35,12 +38,13 @@ function LoadImagesFromServer(target, buttonClass, imageClass, dir) {
     xhr.onload = function () {
         if (xhr.status === 200) {
             let images = JSON.parse(xhr.responseText); // Parse the JSON string into an object
-            if (images.length != 0) {
+            if (images.length != 0 && !images.every((val, i) => val === activeImages[i])) {
                 let imagesContainer = document.getElementById(target);
                 if (imagesContainer.classList.contains("images-container")) { qrcode_container.classList.add("hidden") };
 
-                imagesContainer.innerHTML = ""; // Clear the container
                 images.forEach(image => { // Create DOM elements
+                    if (activeImages.includes(image)) { return; }
+
                     let button = document.createElement("button");
                     button.classList.add(buttonClass);
                     button.addEventListener("click", function() { AddImage(image); });
@@ -52,6 +56,8 @@ function LoadImagesFromServer(target, buttonClass, imageClass, dir) {
 
                     imagesContainer.appendChild(button);
                 });
+
+                activeImages = images;
             }
         } else {
             alert("Error " + xhr.status + ": " + xhr.statusText);
@@ -61,6 +67,19 @@ function LoadImagesFromServer(target, buttonClass, imageClass, dir) {
 }
 
 LoadImagesFromServer('sticker-container', 'image-button', 'sticker-single', '../media/stickers/');
+
+document.addEventListener('keydown', (event) => {
+    if (event.key == 'Delete' || event.key == 'Backspace') {
+        DeleteObject();
+    }
+
+    if (event.key == 'ArrowUp') {
+        canvas.bringForward(canvas.getActiveObject());
+    } else if (event.key == 'ArrowDown') {
+        canvas.sendBackwards(canvas.getActiveObject());
+    }
+
+});
 
 // Custom object selection
 fabric.Object.prototype.transparentCorners = false;

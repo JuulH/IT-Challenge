@@ -69,6 +69,10 @@ $session_id = uniqid();
                 </div>
             </div>
 
+            <script>
+            setInterval(function() { LoadImagesFromServer('images-container', 'image-button', 'image-single', '<?php echo $img_dir ?>'); }, 1500);
+            </script>
+
             <!-- Stickers -->
             <div class="ui-expand-container">
                 <button onclick="ToggleHide('sticker-dropdown', false, true);" class="toolbar-item"><span class="fa-solid fa-note-sticky"></span></button>
