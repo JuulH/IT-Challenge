@@ -14,6 +14,10 @@
     <link rel="stylesheet" href="canvas.css">
 </head>
 
+<?php
+$session_id = uniqid();
+?>
+
 <body>
     <main>
         <div id="toolbar" class="ui-element">
@@ -32,40 +36,36 @@
 
             <!-- Images -->
             <div class="ui-expand-container">
+                <?php 
+                $img_dir = "../media/user-uploads/$session_id/";
+                $upload_link = "https://informaticaserver.ucis.nl/nc_designer/upload/upload.php?id=$session_id";
+                ?>
                 <button onclick="ToggleHide('image-dropdown', false, true);" class="toolbar-item"><span class="fa-solid fa-image"></span></button>
                 <div id="image-dropdown" class="ui-element ui-expand hidden">
                     
                     <div id="gallery-header">
                         <p id="gallery-title">Fotogalerij</p>
                         <div id="gallery-buttons">
-                            <button onclick="ToggleHide('qrcode')"><span class="fa-solid fa-plus"></span></button>
-                            <button><span class="fa-solid fa-arrows-rotate"></span></button>
+                            <button onclick="ToggleHide('qrcode-container')"><span class="fa-solid fa-plus"></span></button>
+                            <button onclick="LoadImagesFromServer('<?php echo $img_dir ?>')"><span class="fa-solid fa-arrows-rotate"></span></button>
                         </div>
                     </div>
 
-                    <div id="qrcode" class="hidden"></div>
+                    <div id="qrcode-container">
+                        <div id="qrcode" onclick="window.open('<?php echo $upload_link ?>', '_blank')"></div>
+                        <a target="_blank" href="<?php echo $upload_link ?>" id="upload-link"></a>
+                        <p id="qrcode-title">Scan deze QR-code om uw foto's toe te voegen</p>
+                    </div>
+
                     <script type="text/javascript">
                         new QRCode(document.getElementById("qrcode"), {
-                            text: "https://www.femkereuvers.shop/",
+                            text: "<?php echo $upload_link ?>",
                             width: 128,
                             height: 128,
                         });
                     </script>
 
-                    <div id="images-container">
-                        <button class="image-button" onclick="AddImage('https://www.femkereuvers.shop/media/logo/stores/1/logo_met_onderschrift.png')">
-                            <img src="https://www.femkereuvers.shop/media/logo/stores/1/logo_met_onderschrift.png" class="image-single">
-                        </button>
-                        <button class="image-button" onclick="AddImage('https://www.femkereuvers.shop/media/logo/stores/1/logo_met_onderschrift.png')">
-                            <img src="https://www.femkereuvers.shop/media/logo/stores/1/logo_met_onderschrift.png" class="image-single">
-                        </button>
-                        <button class="image-button" onclick="AddImage('https://www.femkereuvers.shop/media/logo/stores/1/logo_met_onderschrift.png')">
-                            <img src="https://www.femkereuvers.shop/media/logo/stores/1/logo_met_onderschrift.png" class="image-single">
-                        </button>
-                        <button class="image-button" onclick="AddImage('https://www.femkereuvers.shop/media/logo/stores/1/logo_met_onderschrift.png')">
-                            <img src="https://www.femkereuvers.shop/media/logo/stores/1/logo_met_onderschrift.png" class="image-single">
-                        </button>
-                    </div>
+                    <div id="images-container"></div>
                 </div>
             </div>
 

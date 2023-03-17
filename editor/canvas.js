@@ -9,6 +9,8 @@ const colorIcon = document.getElementById('color');
 const trash = document.getElementById('trash-container');
 const trashChildren = Array.from(trash.getElementsByTagName("*"));
 const colorChildren = Array.from(colorContainer.getElementsByTagName("*"));
+const imagesContainer = document.getElementById('images-container');
+const qrcode_container = document.getElementById('qrcode-container');
 
 // Get page size (in pixels)
 const pageWidth  = Math.max(document.documentElement.clientWidth,  window.innerWidth  || 0);
@@ -26,6 +28,37 @@ const canvas = new fabric.Canvas('canvas', {
     height: canvasHeight,
     preserveObjectStacking: true
 });
+
+// Load images from server using AJAX
+function LoadImagesFromServer(dir) {
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", "refresh-images.php?dir=" + dir);
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            let images = JSON.parse(xhr.responseText); // Parse the JSON string into an object
+            if (images.length != 0) {
+                qrcode_container.classList.add("hidden");
+            }
+
+            imagesContainer.innerHTML = ""; // Clear the container
+            images.forEach(image => { // Create DOM elements
+                let button = document.createElement("button");
+                button.classList.add("image-button");
+                button.addEventListener("click", function() { AddImage(image); });
+                
+                let img = document.createElement("img");
+                img.src = image;
+                img.classList.add("image-single");
+                button.appendChild(img);
+
+                imagesContainer.appendChild(button);
+            });
+        } else {
+            alert("Error " + xhr.status + ": " + xhr.statusText);
+        }
+    };
+    xhr.send();
+}
 
 // Custom object selection
 fabric.Object.prototype.transparentCorners = false;

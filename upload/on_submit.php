@@ -61,5 +61,5 @@ if(isset($_POST['submit']) && $_POST['session_id'] != ""){
     }
 }
 
-header("Location: upload.php");
+header("Location: upload.php?id=$session_id");
 ?>

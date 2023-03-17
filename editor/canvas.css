@@ -116,7 +116,11 @@ main {
 }
 
 /* Images */
-#image-dropdown p {
+#image-dropdown {
+    width: 336px;
+}
+
+#gallery-title {
     text-align: center;
     font-size: 1.25rem;
     font-weight: 600;
@@ -153,11 +157,32 @@ main {
     background-color: #dddddd;
 }
 
+#qrcode-container {
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+    align-items: center;
+    justify-content: center;
+}
+
+#qrcode-title{
+    font-size: .95rem;
+}
+
+#qrcode-container > a {
+    font-size: .75rem;
+    margin-bottom: 1rem;
+}
+
+#qrcode-container > a::after {
+    content: attr(href);
+}
+
 #qrcode {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 1rem;
+    cursor: pointer;
 }
 
 #images-container {
