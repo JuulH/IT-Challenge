@@ -5,7 +5,7 @@ if (isset($_GET['img'])) {
     $img = $_GET['img'];
 
     // Allowed mime content types
-    $allowed = array('image/jpeg', 'image/png', 'image/gif');
+    $allowed = array('image/jpeg', 'image/png', 'image/gif', 'image/svg+xml', 'image/webp', 'image/bmp', 'image/tiff');
 
     $filetype = mime_content_type($img);
 

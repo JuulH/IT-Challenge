@@ -2,7 +2,7 @@
 
 if (isset($_GET['dir'])) {
     $dir = $_GET['dir'];
-    $filetypes = array('jpg', 'png', 'gif');
+    $filetypes = array('jpg', 'png', 'gif', 'jpeg', 'webp', 'svg', 'bmp', 'tiff');
     $user_uploads = array();
 
     foreach ($filetypes as $type) {

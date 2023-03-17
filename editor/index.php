@@ -47,7 +47,7 @@ $session_id = uniqid();
                         <p id="gallery-title">Fotogalerij</p>
                         <div id="gallery-buttons">
                             <button onclick="ToggleHide('qrcode-container')"><span class="fa-solid fa-plus"></span></button>
-                            <button onclick="LoadImagesFromServer('<?php echo $img_dir ?>')"><span class="fa-solid fa-arrows-rotate"></span></button>
+                            <button onclick="LoadImagesFromServer('images-container', 'image-button', 'image-single', '<?php echo $img_dir ?>')"><span class="fa-solid fa-arrows-rotate"></span></button>
                         </div>
                     </div>
 
@@ -76,33 +76,8 @@ $session_id = uniqid();
                     <div id="sticker-header">
                         <p id="sticker-title">Stickers</p>
                     </div>
-                        
-                    <div id="sticker-container">
-                        <button onclick="AddImage('https://www.femkereuvers.shop/media/logo/stores/1/logo_met_onderschrift.png')" class="image-button">
-                            <img src="https://www.femkereuvers.shop/media/logo/stores/1/logo_met_onderschrift.png" class="sticker-single">
-                        </button>
-                        <button onclick="AddImage('https://unsplash.it/500/500')" class="image-button">
-                            <img src="https://unsplash.it/500/500" class="sticker-single">
-                        </button>
-                        <button onclick="AddImage('https://unsplash.it/400/800')" class="image-button">
-                            <img src="https://unsplash.it/400/800" class="sticker-single">
-                        </button>
-                        <button onclick="AddImage('https://unsplash.it/600/450')" class="image-button">
-                            <img src="https://unsplash.it/600/450" class="sticker-single">
-                        </button>
-                        <button onclick="AddImage('https://unsplash.it/500/450')" class="image-button">
-                            <img src="https://unsplash.it/500/450" class="sticker-single">
-                        </button>
-                        <button onclick="AddImage('https://unsplash.it/600/950')" class="image-button">
-                            <img src="https://unsplash.it/600/950" class="sticker-single">
-                        </button>
-                        <button onclick="AddImage('https://unsplash.it/200/200')" class="image-button">
-                            <img src="https://unsplash.it/200/200" class="sticker-single">
-                        </button>
-                        <button onclick="AddImage('https://unsplash.it/300/450')" class="image-button">
-                            <img src="https://unsplash.it/300/450" class="sticker-single">
-                        </button>
-                    </div>
+
+                    <div id="sticker-container"></div>
                 </div>
             </div>
 
