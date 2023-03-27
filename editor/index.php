@@ -8,6 +8,7 @@
     <title>Femke Reuvers - IT Challenge</title>
     <script src="https://cdn.jsdelivr.net/npm/fabric"></script>
     <script defer src="canvas.js"></script>
+    <script defer src="tools.js"></script>
     <script src="https://kit.fontawesome.com/74cb3809fb.js" crossorigin="anonymous"></script>
     <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
