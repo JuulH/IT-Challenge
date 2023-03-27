@@ -6,7 +6,10 @@ if (isset($_GET['dir'])) {
     $user_uploads = array();
 
     foreach ($filetypes as $type) {
-        $user_uploads = array_merge($user_uploads, glob($dir . '*.' . $type));
+        $files = glob($dir . '*.' . $type);
+        foreach ($files as $file) {
+            array_push($user_uploads, basename($file));
+        }
     }
 
     $sources = array();

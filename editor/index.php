@@ -12,6 +12,7 @@
     <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link rel="stylesheet" href="canvas.css">
+    <link rel="icon" href="../media/website/favicon.png" type="image/x-icon">
 </head>
 
 <?php
@@ -70,7 +71,7 @@ $session_id = uniqid();
             </div>
 
             <script>
-            setInterval(function() { LoadImagesFromServer('images-container', 'image-button', 'image-single', '<?php echo $img_dir ?>'); }, 1500);
+            setInterval(function() { LoadImagesFromServer('images-container', 'image-button', 'image-single', '<?php echo $img_dir ?>', false, '<?php echo $session_id ?>'); }, 1500);
             </script>
 
             <!-- Stickers -->

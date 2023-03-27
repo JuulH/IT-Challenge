@@ -7,15 +7,15 @@
     <title>Voeg uw foto's toe</title>
     <script src="https://kit.fontawesome.com/74cb3809fb.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="upload.css">
+    <link rel="icon" href="../media/website/favicon.png" type="image/x-icon">
 </head>
 
 <body>
     <main>
         <form action="on_submit.php" method="POST" enctype="multipart/form-data">
             <input type="hidden" name="session_id" value="<?php echo $_GET['id'];?>">
-        
-            <label for="image">Image</label>
             <input required type="file" id="image" name="image" accept="image/*">
+            <span class="fa-solid fa-image"></span>
         
             <input type="submit" name="submit" value="Foto uploaden">
         </form>

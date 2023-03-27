@@ -1,6 +1,8 @@
 # Project media
 media/user-uploads/*
 media/stickers/*
+!media/user-uploads/.htaccess
+!media/stickers/.htaccess
 
 # Visual Studio
 .vscode/*

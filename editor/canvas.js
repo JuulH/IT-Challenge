@@ -32,7 +32,7 @@ const canvas = new fabric.Canvas('canvas', {
 let activeImages = [];
 
 // Load images from server using AJAX
-function LoadImagesFromServer(target, buttonClass, imageClass, dir) {
+function LoadImagesFromServer(target, buttonClass, imageClass, dir, sticker, sessionId) {
     let xhr = new XMLHttpRequest();
     xhr.open("GET", "refresh-images.php?dir=" + dir);
     xhr.onload = function () {
@@ -44,6 +44,12 @@ function LoadImagesFromServer(target, buttonClass, imageClass, dir) {
 
                 images.forEach(image => { // Create DOM elements
                     if (activeImages.includes(image)) { return; }
+
+                    if (sticker) { 
+                        image += "&sticker=true";
+                    } else {
+                        image += "&id=" + sessionId;
+                    }
 
                     let button = document.createElement("button");
                     button.classList.add(buttonClass);
@@ -66,7 +72,7 @@ function LoadImagesFromServer(target, buttonClass, imageClass, dir) {
     xhr.send();
 }
 
-LoadImagesFromServer('sticker-container', 'image-button', 'sticker-single', '../media/stickers/');
+LoadImagesFromServer('sticker-container', 'image-button', 'sticker-single', '../media/stickers/', true);
 
 document.addEventListener('keydown', (event) => {
     if (event.key == 'Delete' || event.key == 'Backspace') {
@@ -148,8 +154,8 @@ document.addEventListener('mousedown', function(event) {
 });
 
 // Postcard size (in mm)
-let postcardWidth = 100;
-let postcardHeight = 100;
+let postcardWidth = 135;
+let postcardHeight = 135;
 const postcardMargins = 3; // Cutting margins (in mm)
 postcardWidth += postcardMargins * 2;
 postcardHeight += postcardMargins * 2;
@@ -260,8 +266,8 @@ function DropdownArrow() {
 
 function AddSquare() {
     let rect = new fabric.Rect({
-        width: 100,
-        height: 100,
+        width: 200,
+        height: 200,
         originX: 'center',
         originY: 'center',
         top: canvas.height / 2,
@@ -275,7 +281,7 @@ function AddSquare() {
 
 function AddCircle() {
     let circle = new fabric.Circle({
-        radius: 50,
+        radius: 100,
         originX: 'center',
         originY: 'center',
         top: canvas.height / 2,
@@ -289,8 +295,8 @@ function AddCircle() {
 
 function AddTriangle() {
     let rect = new fabric.Triangle({
-        width: 100,
-        height: 100,
+        width: 200,
+        height: 200,
         originX: 'center',
         originY: 'center',
         top: canvas.height / 2,
