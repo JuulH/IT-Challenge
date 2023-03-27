@@ -13,8 +13,8 @@
 <body>
     <main>
         <form action="on_submit.php" method="POST" enctype="multipart/form-data">
-            <input type="hidden" name="session_id" value="<?php echo $_GET['id'];?>">
-            <input required type="file" id="image" name="image" accept="image/*">
+            <input required type="hidden" name="session_id" value="<?php echo $_GET['id'];?>">
+            <input required multiple type="file" id="image" name="images[]" accept="image/*">
             <span class="fa-solid fa-image"></span>
         
             <input type="submit" name="submit" value="Foto uploaden">
