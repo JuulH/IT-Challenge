@@ -105,6 +105,53 @@ function AddSquare() {
     Hide('shape-dropdown', DropdownArrow);
 }
 
+$('.alignment').click(function() {
+    var cur_value = $(this).attr('data-action');
+    var activeObj = canvas.getActiveObject() || canvas.getActiveGroup();
+    if (cur_value != '' && activeObj) {
+      process_align(cur_value, activeObj);
+      activeObj.setCoords();
+      canvas.renderAll();
+    } else {
+      alert('Please select a item');
+      return false;
+    }
+  });
+  
+  /* Align the selected object */
+  function process_align(val, activeObj) {
+    switch (val) {
+  
+      case 'left':
+        activeObj.set({
+          left: 0
+        });
+        break;
+      case 'right':
+        activeObj.set({
+          left: canvas.width - (activeObj.width * activeObj.scaleX)
+        });
+        break;
+      case 'top':
+        activeObj.set({
+          top: 0
+        });
+        break;
+      case 'bottom':
+        activeObj.set({
+          top: canvas.height - (activeObj.height * activeObj.scaleY)
+        });
+        break;
+      case 'center':
+        activeObj.set({
+          left: (canvas.width / 2) - ((activeObj.width * activeObj.scaleX) / 2)
+        });
+        break;
+    }
+    canvas.renderAll();
+  }
+  
+
 function AddCircle() {
     let circle = new fabric.Circle({
         radius: 100,
