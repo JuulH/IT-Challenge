@@ -7,6 +7,8 @@ const colorIcon = document.getElementById('color');
 const trash = document.getElementById('trash-container');
 const trashChildren = Array.from(trash.getElementsByTagName("*"));
 const colorChildren = Array.from(colorContainer.getElementsByTagName("*"));
+const alignContainer = document.getElementById('align-container');
+const alignChildren = Array.from(alignContainer.getElementsByTagName("*"));
 
 // UI Control
 function ToggleHide(element, fn, hideAll) {
@@ -84,6 +86,40 @@ function Hide(element, fn, hideAll) {
     }
 }
 
+// Align objects
+function AlignObject(direction) {
+    let selectedObjects = canvas.getActiveObjects();
+
+    selectedObjects.forEach((object) => {
+        let bounds = object.getBoundingRect();
+        let matrix = object.calcTransformMatrix();
+
+        switch (direction) {
+            case 'left':
+                object.set('left', 0 + bounds.width / 2);
+                break;
+            case 'center':
+                object.set('left', canvas.width / 2);
+                break;
+            case 'right':
+                object.set('left', canvas.width - bounds.width / 2);
+                break;
+            case 'top':
+                object.set('top', 0 + bounds.height / 2);
+                break;
+            case 'middle':
+                object.set('top', canvas.height / 2);
+                break;
+            case 'bottom':
+                object.set('top', canvas.height - bounds.height / 2);
+                break;
+        }
+        object.setCoords();
+    });
+
+    canvas.renderAll();
+}
+
 // Add shapes
 function DropdownArrow() {
     shapeDropdownArrow.classList.toggle('fa-angle-right');
@@ -103,54 +139,7 @@ function AddSquare() {
     canvas.add(rect);
     canvas.renderAll();
     Hide('shape-dropdown', DropdownArrow);
-}
-
-$('.alignment').click(function() {
-    var cur_value = $(this).attr('data-action');
-    var activeObj = canvas.getActiveObject() || canvas.getActiveGroup();
-    if (cur_value != '' && activeObj) {
-      process_align(cur_value, activeObj);
-      activeObj.setCoords();
-      canvas.renderAll();
-    } else {
-      alert('Please select a item');
-      return false;
-    }
-  });
-  
-  /* Align the selected object */
-  function process_align(val, activeObj) {
-    switch (val) {
-  
-      case 'left':
-        activeObj.set({
-          left: 0
-        });
-        break;
-      case 'right':
-        activeObj.set({
-          left: canvas.width - (activeObj.width * activeObj.scaleX)
-        });
-        break;
-      case 'top':
-        activeObj.set({
-          top: 0
-        });
-        break;
-      case 'bottom':
-        activeObj.set({
-          top: canvas.height - (activeObj.height * activeObj.scaleY)
-        });
-        break;
-      case 'center':
-        activeObj.set({
-          left: (canvas.width / 2) - ((activeObj.width * activeObj.scaleX) / 2)
-        });
-        break;
-    }
-    canvas.renderAll();
-  }
-  
+} 
 
 function AddCircle() {
     let circle = new fabric.Circle({
@@ -228,10 +217,14 @@ function DeleteObject() {
 
     let selectedObjects = canvas.getActiveObjects();
     selectedObjects.forEach(object => {
+        if (object.constructor === fabric.IText && object.isEditing) {
+            return;
+        }
+
         canvas.remove(object);
+        canvas.discardActiveObject(); // Deselect objects
     });
 
-    canvas.discardActiveObject(); // Deselect objects
     canvas.renderAll();
 }
 
@@ -342,7 +335,7 @@ function renderIcon(icon) {
 
 // Deselect object when clicking outside of canvas, except trash
 document.addEventListener('mousedown', function(event) {
-    if(event.target != canvas.upperCanvasEl && !trashChildren.includes(event.target) && !colorChildren.includes(event.target)) {
+    if(event.target != canvas.upperCanvasEl && !trashChildren.includes(event.target) && !colorChildren.includes(event.target) && !alignChildren.includes(event.target)) {
         canvas.discardActiveObject();
         canvas.renderAll();
     }

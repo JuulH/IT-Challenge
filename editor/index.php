@@ -10,6 +10,7 @@
     <script defer src="canvas.js"></script>
     <script defer src="tools.js"></script>
     <script src="https://kit.fontawesome.com/74cb3809fb.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link rel="stylesheet" href="canvas.css">
@@ -101,6 +102,26 @@ $session_id = uniqid();
                 <button onclick="ToggleHide('color-picker', OpenPicker, true);" id="color" class="toolbar-item"><span class="fa-solid fa-circle-dot"></span></button>
                 <div id="color-picker" class="ui-element ui-expand hidden">
                     <input type="color" id="color-input" value="#000000">
+                </div>
+            </div>
+
+            <!-- Alignment -->
+            <div id="align-container" class="ui-expand-container">
+                <button onclick="ToggleHide('align-dropdown', OpenPicker, true);" id="color" class="toolbar-item">
+                    <span class="material-symbols-outlined">align_horizontal_left</span>
+                </button>
+
+                <div id="align-dropdown" class="ui-element ui-expand hidden">
+                    <div id="align-left-to-right">
+                        <button onclick="AlignObject('left');" class="toolbar-item"><span class="material-symbols-outlined">align_horizontal_left</span></button>
+                        <button onclick="AlignObject('center');" class="toolbar-item"><span class="material-symbols-outlined">align_horizontal_center</span></button>
+                        <button onclick="AlignObject('right');" class="toolbar-item"><span class="material-symbols-outlined">align_horizontal_right</span></button>
+                    </div>
+                    <div id="align-top-to-bottom">
+                        <button onclick="AlignObject('top');" class="toolbar-item"><span class="material-symbols-outlined">align_vertical_top</span></button>
+                        <button onclick="AlignObject('middle');" class="toolbar-item"><span class="material-symbols-outlined">align_vertical_center</span></button>
+                        <button onclick="AlignObject('bottom');" class="toolbar-item"><span class="material-symbols-outlined">align_vertical_bottom</span></button>
+                    </div>
                 </div>
             </div>
             
