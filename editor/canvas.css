@@ -8,7 +8,7 @@
 }
 
 body {
-    background-color: #cccccc;
+    background-color: #e9e9e9;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -25,6 +25,7 @@ main {
     background-color: white;
     flex-grow: 1;
     height: 100vh;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 }
 
 /* UI Elements */
@@ -37,12 +38,14 @@ main {
 }
 
 #toolbar {
-    margin-right: 1rem;
+    margin-right: 1.5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-evenly;
+    filter: drop-shadow(0 0 15px rgba(0, 0, 0, 0.2));
     gap: 1rem;
+    border-radius: 10rem;
 }
 
 .toolbar-item {
@@ -99,10 +102,19 @@ main {
     right: -1.5rem;
 }
 
+.ui-expand-top {
+    transform: translateY(-20%) translateX(100%);
+}
+
+.ui-expand-bottom {
+    transform: translateY(-70%) translateX(100%);
+}
+
 #shape-dropdown {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    border-radius: 10rem;
 }
 
 #trash {
@@ -129,7 +141,7 @@ main {
 #gallery-header {
     position: relative;
     padding: .5rem;
-    background-color: #f7f7f7;
+    /* background-color: #f7f7f7; */
     border-radius: 1rem;
     margin-bottom: 1rem;
 }
@@ -147,6 +159,7 @@ main {
     width: 2rem;
     height: 2rem;
     border-radius: 50%;
+    background-color: transparent;
 }
 
 #gallery-buttons > button:hover {
@@ -163,10 +176,12 @@ main {
     gap: .25rem;
     align-items: center;
     justify-content: center;
+    margin-bottom: 1rem;
 }
 
 #qrcode-title{
     font-size: .95rem;
+    margin-top: .25rem
 }
 
 #qrcode-container > a {

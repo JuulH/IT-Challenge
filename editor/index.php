@@ -30,7 +30,7 @@ $session_id = uniqid();
             <!-- Shape picker -->
             <div class="ui-expand-container">
                 <button onclick="ToggleHide('shape-dropdown', DropdownArrow, true);" class="toolbar-item"><span class="fa-solid fa-shapes"><span class="toolbar-more fa-solid fa-angle-right"></span></span></button>
-                <div id="shape-dropdown" class="ui-element ui-expand hidden">
+                <div id="shape-dropdown" class="ui-element ui-expand hidden ui-expand-top">
                     <button onclick="AddSquare();" class="toolbar-item"><span class="fa-solid fa-square"></span></button>
                     <button onclick="AddCircle();" class="toolbar-item"><span class="fa-solid fa-circle"></span></button>
                     <button onclick="AddTriangle();" class="toolbar-item"><span class="fa-solid fa-play"></span></button>
@@ -50,11 +50,12 @@ $session_id = uniqid();
                 <div id="image-dropdown" class="ui-element ui-expand hidden">
                     
                     <div id="gallery-header">
-                        <p id="gallery-title">Fotogalerij</p>
-                        <!-- <div id="gallery-buttons">
-                            <button onclick="ToggleHide('qrcode-container')"><span class="fa-solid fa-plus"></span></button>
-                            <button onclick="LoadImagesFromServer('images-container', 'image-button', 'image-single', '<?php echo $img_dir ?>')"><span class="fa-solid fa-arrows-rotate"></span></button>
-                        </div> -->
+                        <p id="gallery-title">Fotobibliotheek</p>
+                        <div id="gallery-buttons">
+                            <button onclick="Hide('image-dropdown')"><span class="fa-solid fa-xmark"></span></button>
+                            <!-- <button onclick="ToggleHide('qrcode-container')"><span class="fa-solid fa-plus"></span></button>
+                            <button onclick="LoadImagesFromServer('images-container', 'image-button', 'image-single', '<?php echo $img_dir ?>')"><span class="fa-solid fa-arrows-rotate"></span></button> -->
+                        </div>
                     </div>
 
                     <div id="qrcode-container">
@@ -66,8 +67,8 @@ $session_id = uniqid();
                     <script type="text/javascript">
                         new QRCode(document.getElementById("qrcode"), {
                             text: "<?php echo $upload_link ?>",
-                            width: 128,
-                            height: 128,
+                            width: 136,
+                            height: 136,
                         });
                     </script>
 
@@ -114,7 +115,7 @@ $session_id = uniqid();
                     <span class="material-symbols-outlined">align_horizontal_left</span>
                 </button>
 
-                <div id="align-dropdown" class="ui-element ui-expand hidden">
+                <div id="align-dropdown" class="ui-element ui-expand hidden ui-expand-bottom">
                     <div id="align-left-to-right">
                         <button onclick="AlignObject('left');" class="toolbar-item"><span class="material-symbols-outlined">align_horizontal_left</span></button>
                         <button onclick="AlignObject('center');" class="toolbar-item"><span class="material-symbols-outlined">align_horizontal_center</span></button>
