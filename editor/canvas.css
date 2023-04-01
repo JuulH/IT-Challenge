@@ -261,3 +261,36 @@ main {
     flex-direction: row;
     justify-content: center;
 }
+
+/* Page previews */
+#preview-container {
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.preview-button {
+    position: relative;
+}
+
+.preview-button::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0);
+    transition: background-color 0.15s ease;
+}
+
+.preview-button:hover {
+    cursor: pointer;
+}
+
+.preview-button:hover::after {
+    background-color: rgba(0, 0, 0, 0.1);
+}

@@ -1,12 +1,18 @@
 <?php
 
-$max_size = 6; // megabytes
+if (!isset($_POST['session_id'])) {
+    header('HTTP/1.0 404 Not Found');
+    exit;
+}
 
-if(isset($_POST['submit']) && $_POST['session_id'] != ""){
+$max_size = 8; // megabytes
+
+if($_POST['session_id'] != ""){
     $session_id = htmlspecialchars($_POST['session_id']);
     
     $parent_dir = dirname(__DIR__, 1);
     $images = $_FILES["images"];
+    $allOk = 1;
 
     foreach ($images['name'] as $key => $name) {
         $imageFileType = strtolower(pathinfo($images["name"][$key], PATHINFO_EXTENSION));
@@ -49,6 +55,7 @@ if(isset($_POST['submit']) && $_POST['session_id'] != ""){
         // If no issues, upload file to server
         if ($uploadOk == 0) {
             echo "Sorry, your file was not uploaded.\n";
+            $allOk = 0;
         } else {
             
             if (!is_dir($target_dir)) {
@@ -64,5 +71,5 @@ if(isset($_POST['submit']) && $_POST['session_id'] != ""){
     }
 }
 
-header("Location: upload.php?id=$session_id");
+header("Location: upload.php?id=$session_id&" . ($allOk ? 'success' : 'error'));
 ?>

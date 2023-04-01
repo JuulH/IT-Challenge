@@ -9,10 +9,13 @@
     <script src="https://cdn.jsdelivr.net/npm/fabric"></script>
     <script defer src="canvas.js"></script>
     <script defer src="tools.js"></script>
+    <script defer src="exportPDF.js"></script>
+    <script defer src="pages.js"></script>
     <script src="https://kit.fontawesome.com/74cb3809fb.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/canvg/3.0.9/umd.min.js"></script>
     <link rel="stylesheet" href="canvas.css">
     <link rel="icon" href="../media/website/favicon.png" type="image/x-icon">
 </head>
@@ -128,6 +131,8 @@ $session_id = uniqid();
         </div>
 
         <canvas id="canvas" width="500" height="500"></canvas>
+
+        <div id="preview-container"></div>
     </main>
 </body>
 </html>
