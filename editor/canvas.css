@@ -229,7 +229,7 @@ main {
 }
 
 #sticker-container {
-    column-count: 2;
+    column-count: 3;
     column-gap: .5rem;
 }
 
@@ -245,7 +245,7 @@ main {
 }
 
 .sticker-single {
-    width: 150px;
+    width: 100px;
     object-fit: contain;
 }
 
@@ -269,22 +269,34 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-bottom: .1rem;
 }
 
 .preview-button {
     position: relative;
+    outline: 1px solid #bdbdbd;
 }
 
 .preview-button::after {
-    content: "";
-    display: block;
+    content: attr(data-tooltip);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    text-align: center;
+    line-height: 2.5rem;
     width: 100%;
     height: 100%;
     position: absolute;
     top: 0;
     left: 0;
     background-color: rgba(0, 0, 0, 0);
-    transition: background-color 0.15s ease;
+    transition:
+        background-color 0.15s ease,
+        outline-color 0.05s ease-in-out;
+}
+
+.preview-button::after span {
+    padding-bottom: 5px;
 }
 
 .preview-button:hover {
@@ -293,4 +305,11 @@ main {
 
 .preview-button:hover::after {
     background-color: rgba(0, 0, 0, 0.1);
+}
+
+.active {
+    outline: var(--accent-color) solid 2px;
+    outline-offset: -1px;
+    z-index: 1;
+    transition: outline-color 0.05s ease-in-out;
 }

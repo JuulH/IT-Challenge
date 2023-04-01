@@ -2,6 +2,7 @@
 const DOMCanvas = document.getElementById('canvas');
 const toolbar = document.getElementById('toolbar');
 const qrcode_container = document.getElementById('qrcode-container');
+const preview_container = document.getElementById('preview-container');
 
 // Get page size (in pixels)
 const pageWidth  = Math.max(document.documentElement.clientWidth,  window.innerWidth  || 0);

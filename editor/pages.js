@@ -6,6 +6,17 @@ let ctxs = new Array(maxPages);
 let activePage = 0;
 let loading = false;
 
+const pageDescriptors = [
+    "Voor",
+    "Links",
+    "Rechts",
+    "Achter"
+];
+
+const factor = 10;
+const previewWidth = cssWidth / factor;
+const previewHeight = cssHeight / factor;
+
 function LoadPage(i) {
     loading = true;
     UpdatePreview();
@@ -17,28 +28,11 @@ function LoadPage(i) {
         canvas.clear();
     }
 
+    ctxs[activePage].canvas.parentElement.classList.remove('active');
+    ctxs[i].canvas.parentElement.classList.add('active');
+
     activePage = i;
     loading = false;
-}
-
-// Create canvases
-const previewWidth = 150;
-const previewHeight = 150;
-
-for (let i = 0; i < maxPages; i++) {
-    let pCanvas = document.createElement('canvas');
-    pCanvas.width = previewWidth;
-    pCanvas.height = previewHeight;
-    
-    let pButton = document.createElement('div');
-    pButton.onclick = () => LoadPage(i);
-    pButton.className = 'preview-button';
-    pButton.appendChild(pCanvas);
-    previewContainer.appendChild(pButton);
-
-    ctxs[i] = pCanvas.getContext('2d');
-    ctxs[i].fillStyle = "#ffffff";
-    ctxs[i].fillRect(0, 0, previewWidth, previewHeight);
 }
 
 function HideControls() {
@@ -72,9 +66,33 @@ function UpdatePreview() {
     ShowControls();
 }
 
-// For a full list of events, see https://github.com/fabricjs/fabric.js/wiki/Working-with-events or http://fabricjs.com/docs/fabric.Canvas.html#events
-canvas.on({
-    'object:modified': UpdatePreview,
-    'object:added': UpdatePreview,
-    'object:removed': UpdatePreview,
-});
+// Create canvases
+if (maxPages > 1) {
+    for (let i = 0; i < maxPages; i++) {
+        let pCanvas = document.createElement('canvas');
+        pCanvas.width = previewWidth;
+        pCanvas.height = previewHeight;
+
+        let pButton = document.createElement('div');
+        pButton.onclick = () => LoadPage(i);
+        pButton.className = 'preview-button';
+        pButton.appendChild(pCanvas);
+        pButton.setAttribute('data-tooltip', pageDescriptors[i]);
+        previewContainer.appendChild(pButton);
+
+        ctxs[i] = pCanvas.getContext('2d');
+        ctxs[i].fillStyle = "#ffffff";
+        ctxs[i].fillRect(0, 0, previewWidth, previewHeight);
+    }
+
+    // For a full list of events, see https://github.com/fabricjs/fabric.js/wiki/Working-with-events or http://fabricjs.com/docs/fabric.Canvas.html#events
+    canvas.on({
+        'object:modified': UpdatePreview,
+        'object:added': UpdatePreview,
+        'object:removed': UpdatePreview,
+        'object:moving': UpdatePreview,
+        'object:scaling': UpdatePreview,
+        'object:rotating': UpdatePreview,
+        'object:skewing': UpdatePreview,
+    });
+}

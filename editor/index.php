@@ -51,15 +51,15 @@ $session_id = uniqid();
                     
                     <div id="gallery-header">
                         <p id="gallery-title">Fotogalerij</p>
-                        <div id="gallery-buttons">
+                        <!-- <div id="gallery-buttons">
                             <button onclick="ToggleHide('qrcode-container')"><span class="fa-solid fa-plus"></span></button>
                             <button onclick="LoadImagesFromServer('images-container', 'image-button', 'image-single', '<?php echo $img_dir ?>')"><span class="fa-solid fa-arrows-rotate"></span></button>
-                        </div>
+                        </div> -->
                     </div>
 
                     <div id="qrcode-container">
                         <div id="qrcode" onclick="window.open('<?php echo $upload_link ?>', '_blank')"></div>
-                        <a target="_blank" href="<?php echo $upload_link ?>" id="upload-link"></a>
+                        <a hidden target="_blank" href="<?php echo $upload_link ?>" id="upload-link"></a>
                         <p id="qrcode-title">Scan deze QR-code om uw foto's toe te voegen</p>
                     </div>
 
@@ -110,7 +110,7 @@ $session_id = uniqid();
 
             <!-- Alignment -->
             <div id="align-container" class="ui-expand-container">
-                <button onclick="ToggleHide('align-dropdown', OpenPicker, true);" id="color" class="toolbar-item">
+                <button onclick="ToggleHide('align-dropdown', OpenPicker, true);" id="align" class="toolbar-item">
                     <span class="material-symbols-outlined">align_horizontal_left</span>
                 </button>
 

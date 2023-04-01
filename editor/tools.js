@@ -137,6 +137,7 @@ function AddSquare() {
         fill: `${currentColor}`,
     })
     canvas.add(rect);
+    canvas.setActiveObject(canvas.item(canvas.getObjects().length - 1));
     canvas.renderAll();
     Hide('shape-dropdown', DropdownArrow);
 } 
@@ -151,6 +152,7 @@ function AddCircle() {
         fill: `${currentColor}`,
     })
     canvas.add(circle);
+    canvas.setActiveObject(canvas.item(canvas.getObjects().length - 1));
     canvas.renderAll();
     Hide('shape-dropdown', DropdownArrow);
 }
@@ -166,6 +168,7 @@ function AddTriangle() {
         fill: `${currentColor}`,
     })
     canvas.add(rect);
+    canvas.setActiveObject(canvas.item(canvas.getObjects().length - 1));
     canvas.renderAll();
     Hide('shape-dropdown', DropdownArrow);
 }
@@ -180,6 +183,7 @@ function AddText() {
         fill: `${currentColor}`,
         fontSize: 90,
     }));
+    canvas.setActiveObject(canvas.item(canvas.getObjects().length - 1));
     canvas.renderAll();
 }
 
@@ -203,7 +207,9 @@ function AddImage(url) {
             top: canvas.height / 2,
             left: canvas.width / 2,
         });
+
         canvas.add(img);
+        canvas.setActiveObject(canvas.item(canvas.getObjects().length - 1));
         canvas.renderAll();
     });
 
@@ -280,18 +286,20 @@ fabric.Object.prototype.transparentCorners = false;
 fabric.Object.prototype.cornerColor = 'blue';
 fabric.Object.prototype.cornerStyle = 'circle';
 fabric.Object.prototype.borderColor = 'blue';
+fabric.Object.prototype.cornerSize = 18;
+//fabric.Object.prototype.borderDashArray = [5, 5];
 
-var layerUpIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path fill="${fabric.Object.prototype.cornerColor}" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM377 271c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-87-87-87 87c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9L239 167c9.4-9.4 24.6-9.4 33.9 0L377 271z"/></svg>`;
-var layerUpImg = document.createElement('img');
+let layerUpIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path fill="${fabric.Object.prototype.cornerColor}" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM377 271c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-87-87-87 87c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9L239 167c9.4-9.4 24.6-9.4 33.9 0L377 271z"/></svg>`;
+let layerUpImg = document.createElement('img');
 layerUpImg.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(layerUpIcon);
 
-var layerDownIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path fill="${fabric.Object.prototype.cornerColor}" d="M256 0a256 256 0 1 0 0 512A256 256 0 1 0 256 0zM135 241c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l87 87 87-87c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9L273 345c-9.4 9.4-24.6 9.4-33.9 0L135 241z"/></svg>`;
-var layerDownImg = document.createElement('img');
+let layerDownIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path fill="${fabric.Object.prototype.cornerColor}" d="M256 0a256 256 0 1 0 0 512A256 256 0 1 0 256 0zM135 241c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l87 87 87-87c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9L273 345c-9.4 9.4-24.6 9.4-33.9 0L135 241z"/></svg>`;
+let layerDownImg = document.createElement('img');
 layerDownImg.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(layerDownIcon);
 
 function moveLayer(transform, forward) {
-    var target = transform.target;
-    var canvas = target.canvas;
+    let target = transform.target;
+    let canvas = target.canvas;
 
     if (forward) {
         canvas.bringForward(target);
@@ -324,7 +332,7 @@ fabric.Object.prototype.controls.layerDown = new fabric.Control({
 
 function renderIcon(icon) {
     return function renderIcon(ctx, left, top, fabricObject) {
-        var size = this.cornerSize;
+        let size = this.cornerSize;
         ctx.save();
         ctx.translate(left, top);
         ctx.rotate(fabric.util.degreesToRadians(fabricObject.angle));
@@ -333,7 +341,7 @@ function renderIcon(icon) {
     }
 }
 
-// Deselect object when clicking outside of canvas, except trash
+// Deselect object when clicking outside of canvas, except trash or color
 document.addEventListener('mousedown', function(event) {
     if(event.target != canvas.upperCanvasEl && !trashChildren.includes(event.target) && !colorChildren.includes(event.target) && !alignChildren.includes(event.target)) {
         canvas.discardActiveObject();
