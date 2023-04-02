@@ -5,7 +5,7 @@ if (!isset($_POST['session_id'])) {
     exit;
 }
 
-$max_size = 8; // megabytes
+$max_size = 12; // megabytes
 
 if($_POST['session_id'] != ""){
     $session_id = htmlspecialchars($_POST['session_id']);

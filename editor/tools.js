@@ -9,6 +9,8 @@ const trashChildren = Array.from(trash.getElementsByTagName("*"));
 const colorChildren = Array.from(colorContainer.getElementsByTagName("*"));
 const alignContainer = document.getElementById('align-container');
 const alignChildren = Array.from(alignContainer.getElementsByTagName("*"));
+const alwanDOM = document.getElementsByClassName('alwan')[0];
+const alwanChildren = Array.from(alwanDOM.getElementsByTagName("*"));
 
 // UI Control
 function ToggleHide(element, fn, hideAll) {
@@ -238,14 +240,14 @@ function DeleteObject() {
 let currentColor = 'black';
 colorIcon.style.color = currentColor;
 
-function OpenPicker() {
-    setTimeout(() => {
-        if (!colorExpand.classList.contains('hidden')) {
-            colorPicker.focus();
-            colorPicker.click();
-        }
-    }, 0);
-}
+// function OpenPicker() {
+//     setTimeout(() => {
+//         if (!colorExpand.classList.contains('hidden')) {
+//             colorPicker.focus();
+//             colorPicker.click();
+//         }
+//     }, 0);
+// }
 
 function SetColor(color) {
     currentColor = color;
@@ -259,12 +261,16 @@ function SetColor(color) {
     canvas.renderAll();
 }
 
-colorPicker.addEventListener('input', (event) => {
-    SetColor(event.target.value);
-});
+// colorPicker.addEventListener('input', (event) => {
+//     SetColor(event.target.value);
+// });
 
-colorPicker.addEventListener('blur', () => {
-    Hide('color-picker');
+// colorPicker.addEventListener('blur', () => {
+//     Hide('color-picker');
+// });
+
+alwan.on('color', function (color) {
+    SetColor(color.hex());
 });
 
 
@@ -286,16 +292,19 @@ fabric.Object.prototype.transparentCorners = false;
 fabric.Object.prototype.cornerColor = 'blue';
 fabric.Object.prototype.cornerStyle = 'circle';
 fabric.Object.prototype.borderColor = 'blue';
-fabric.Object.prototype.cornerSize = 18;
+fabric.Object.prototype.cornerSize = 20;
 //fabric.Object.prototype.borderDashArray = [5, 5];
 
+// Create layer icons
 let layerUpIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path fill="${fabric.Object.prototype.cornerColor}" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM377 271c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-87-87-87 87c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9L239 167c9.4-9.4 24.6-9.4 33.9 0L377 271z"/></svg>`;
-let layerUpImg = document.createElement('img');
-layerUpImg.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(layerUpIcon);
+let layerUpBlob = new Blob([layerUpIcon], { type: 'image/svg+xml;charset=utf-8' });
+let layerUpImg = new Image();
+layerUpImg.src = URL.createObjectURL(layerUpBlob);
 
 let layerDownIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path fill="${fabric.Object.prototype.cornerColor}" d="M256 0a256 256 0 1 0 0 512A256 256 0 1 0 256 0zM135 241c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l87 87 87-87c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9L273 345c-9.4 9.4-24.6 9.4-33.9 0L135 241z"/></svg>`;
-let layerDownImg = document.createElement('img');
-layerDownImg.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(layerDownIcon);
+let layerDownBlob = new Blob([layerDownIcon], { type: 'image/svg+xml;charset=utf-8' });
+let layerDownImg = new Image();
+layerDownImg.src = URL.createObjectURL(layerDownBlob);
 
 function moveLayer(transform, forward) {
     let target = transform.target;
@@ -311,23 +320,23 @@ function moveLayer(transform, forward) {
 fabric.Object.prototype.controls.layerUp = new fabric.Control({
     x: 0.5,
     y: 0,
-    offsetX: 24,
+    offsetX: 26,
     offsetY: -22,
     cursorStyle: 'pointer',
     mouseUpHandler: function(eventData, transform) { moveLayer(transform, true); },
     render: renderIcon(layerUpImg),
-    cornerSize: 24
+    cornerSize: 28
 });
 
 fabric.Object.prototype.controls.layerDown = new fabric.Control({
     x: 0.5,
     y: 0,
-    offsetX: 24,
+    offsetX: 26,
     offsetY: 22,
     cursorStyle: 'pointer',
     mouseUpHandler: function (eventData, transform) { moveLayer(transform, false); },
     render: renderIcon(layerDownImg),
-    cornerSize: 24
+    cornerSize: 28
 });
 
 function renderIcon(icon) {
@@ -343,7 +352,7 @@ function renderIcon(icon) {
 
 // Deselect object when clicking outside of canvas, except trash or color
 document.addEventListener('mousedown', function(event) {
-    if(event.target != canvas.upperCanvasEl && !trashChildren.includes(event.target) && !colorChildren.includes(event.target) && !alignChildren.includes(event.target)) {
+    if(event.target != canvas.upperCanvasEl && !trashChildren.includes(event.target) && !colorChildren.includes(event.target) && !alignChildren.includes(event.target) && !alwanChildren.includes(event.target)) {
         canvas.discardActiveObject();
         canvas.renderAll();
     }

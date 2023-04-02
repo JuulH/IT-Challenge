@@ -51,6 +51,47 @@ canvas.setHeight(postcardHeight * mmToInch * PPI);
 canvas.setDimensions({width: `${cssWidth}px`, height: `${cssHeight}px`}, {cssOnly: true});
 // toolbar.style.height = `calc(${cssHeight}px - 1.5rem)`;
 
+let sessionId = document.body.getAttribute('data-session-id');
+
+swatches = ['#000000', '#333333', '#666666', '#999999', '#CCCCCC', '#FFFFFF', '#1f77b4', '#2ca02c', '#ff7f0e', '#d62728', '#9467bd', '#8c564b', '#1e90ff', '#00bfff', '#00ced1', '#00ff7f', '#adff2f', '#ffd700', '#ff6347', '#ff4500', '#ffa07a', '#ff69b4', '#dc143c', '#a52a2a', '#008080', '#3cb371', '#32cd32', '#228b22', '#808000', '#556b2f', '#ffa500', '#ffdab9', '#f0e68c', '#fafad2', '#ffff00', '#d2b48c'];
+
+const alwan = new Alwan('#color', {
+    theme: 'light',
+    toggle: true,
+    popover: true,
+    position: 'right',
+    // Set the gap (in pixels) between the picker container and the reference element.
+    margin: 20,
+    // Replace the reference element with a pre-styled button.
+    //  In case you set the preset to false (using your own reference element), 
+    // to access the color to change its background or any other property, 
+    // add the css custom property to your styles --tw-color.
+    preset: false,
+    // Initial color.
+    color: '#000',
+    // Default color.
+    default: '#000',
+    // Target can be a selector or an HTML element,
+    // If the option popover is true, the picker container will be positionned retalive to this element,
+    // instead of the reference element.
+    // else if popover option is false, the picker container will be appended as a child into this element.
+    target: 'color',
+    disabled: false,
+    format: 'hex',
+    singleInput: false,
+    inputs: {},
+    opacity: false,
+    preview: true,
+    copy: false,
+    // Array of color strings, invalid color strings will default to rgb(0,0,0).
+    swatches: swatches,
+    // Show/Hide swatches container (Make swatches container collapsible).
+    toggleSwatches: false,
+    // Picker widget shared between multiple instance (this is good if you have many color picker instances).
+    shared: false,
+
+});
+
 // Load images from server using AJAX
 let activeImages = [];
 

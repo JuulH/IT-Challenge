@@ -14,12 +14,36 @@ const pageDescriptors = [
 ];
 
 const factor = 5;
-const cssFactor = 2;
+const cssFactor = 2.1;
 const previewWidth = cssWidth / factor;
 const previewHeight = cssHeight / factor;
 
+// Cutting lines
+const cuttingLineOptions = {
+    stroke: 'blue',
+    strokeWidth: 3,
+    strokeDashArray: [5, 5],
+    selectable: false,
+    evented: false,
+    opacity: 0.5,
+};
+
+const insetPixels = postcardMargins * mmToInch * PPI;
+const cuttingLineTop = new fabric.Line([0, insetPixels, canvas.width, insetPixels], cuttingLineOptions);
+const cuttingLineBottom = new fabric.Line([0, canvas.height - insetPixels, canvas.width, canvas.height - insetPixels], cuttingLineOptions);
+const cuttingLineLeft = new fabric.Line([insetPixels, 0, insetPixels, canvas.height], cuttingLineOptions);
+const cuttingLineRight = new fabric.Line([canvas.width - insetPixels, 0, canvas.width - insetPixels, canvas.height], cuttingLineOptions);
+
+const cuttingLineLayer = new fabric.Group([cuttingLineTop, cuttingLineBottom, cuttingLineLeft, cuttingLineRight], {
+    selectable: false,
+    evented: false,
+});
+
+canvas.add(cuttingLineLayer);
+
 function LoadPage(i) {
     loading = true;
+    canvas.remove(cuttingLineLayer);
     UpdatePreview();
     pages[activePage] = canvas.toJSON();
     
@@ -31,6 +55,8 @@ function LoadPage(i) {
 
     ctxs[activePage].canvas.parentElement.classList.remove('active');
     ctxs[i].canvas.parentElement.classList.add('active');
+
+    canvas.add(cuttingLineLayer);
 
     activePage = i;
     loading = false;
@@ -74,9 +100,11 @@ function UpdatePreview() {
     ctxs[activePage].fillRect(0, 0, previewWidth, previewHeight);
 
     HideControls();
+    cuttingLineLayer.visible = false;
     canvas.renderAll();
     ctxs[activePage].drawImage(canvas.lowerCanvasEl, 0, 0, previewWidth, previewHeight); // Copy canvas to preview
     ShowControls();
+    cuttingLineLayer.visible = true;
 }
 
 // Create canvases
