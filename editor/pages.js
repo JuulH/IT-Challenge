@@ -13,7 +13,8 @@ const pageDescriptors = [
     "Achter"
 ];
 
-const factor = 10;
+const factor = 5;
+const cssFactor = 2;
 const previewWidth = cssWidth / factor;
 const previewHeight = cssHeight / factor;
 
@@ -33,6 +34,18 @@ function LoadPage(i) {
 
     activePage = i;
     loading = false;
+}
+
+function PreviousPage() {
+    if (activePage > 0) {
+        LoadPage(activePage - 1);
+    }
+}
+
+function NextPage() {
+    if (activePage < maxPages - 1) {
+        LoadPage(activePage + 1);
+    }
 }
 
 function HideControls() {
@@ -73,9 +86,13 @@ if (maxPages > 1) {
         pCanvas.width = previewWidth;
         pCanvas.height = previewHeight;
 
+        pCanvas.style.width = previewWidth / cssFactor + 'px';
+        pCanvas.style.height = previewHeight / cssFactor + 'px';
+
         let pButton = document.createElement('div');
         pButton.onclick = () => LoadPage(i);
         pButton.className = 'preview-button';
+        if(i == 0) pButton.classList.add('active');
         pButton.appendChild(pCanvas);
         pButton.setAttribute('data-tooltip', pageDescriptors[i]);
         previewContainer.appendChild(pButton);

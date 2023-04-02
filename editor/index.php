@@ -133,7 +133,11 @@ $session_id = uniqid();
 
         <canvas id="canvas" width="500" height="500"></canvas>
 
-        <div id="preview-container"></div>
+        <div id="pages-container">
+            <button onclick="PreviousPage()" class="toolbar-item"><span class="fa-solid fa-angle-left"></span></button>
+            <div id="preview-container"></div>
+            <button onclick="NextPage()" class="toolbar-item"><span class="fa-solid fa-angle-right"></span></button>
+        </div>
     </main>
 </body>
 </html>

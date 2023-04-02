@@ -10,6 +10,7 @@
 body {
     background-color: #e9e9e9;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden;
 }
 
 main {
@@ -30,7 +31,6 @@ main {
 
 /* UI Elements */
 .ui-element {
-    border: 2px solid darkgray;
     border-radius: 1rem;
     background-color: white;
     padding: .75rem;
@@ -278,9 +278,28 @@ main {
 }
 
 /* Page previews */
-#preview-container {
+#pages-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: absolute;
-    bottom: 0;
+    bottom: .5rem;
+    background-color: white;
+    border-radius: 1rem;
+    filter: drop-shadow(0 0 15px rgba(0, 0, 0, 0.2));
+    padding: .25rem;
+}
+
+#pages-container button {
+    background-color: transparent;
+    transition: filter 0.1s ease;
+}
+
+#pages-container button:hover {
+    filter: brightness(.5);
+}
+
+#preview-container {
     display: flex;
     align-items: center;
     justify-content: center;
