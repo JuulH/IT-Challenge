@@ -14,7 +14,7 @@ const pageDescriptors = [
 ];
 
 const factor = 5;
-const cssFactor = 2.1;
+const cssFactor = 1.9;
 const previewWidth = cssWidth / factor;
 const previewHeight = cssHeight / factor;
 
@@ -45,7 +45,7 @@ function LoadPage(i) {
     loading = true;
     canvas.remove(cuttingLineLayer);
     UpdatePreview();
-    pages[activePage] = canvas.toJSON();
+    pages[activePage] = canvas.toJSON(); // Save current page
     
     if (pages[i]) {
         canvas.loadFromJSON(pages[i]);
@@ -74,6 +74,7 @@ function NextPage() {
     }
 }
 
+// Hide controls when rendering preview
 function HideControls() {
     let activeObject = canvas.getActiveObject();
     if(activeObject) {

@@ -15,6 +15,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/canvg/3.0.9/umd.min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/alwan/dist/css/alwan.min.css">
     <script src="https://unpkg.com/alwan/dist/js/alwan.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
     <script defer src="canvas.js"></script>
     <script defer src="tools.js"></script>
@@ -35,7 +36,8 @@ $session_id = uniqid();
             
             <!-- Shape picker -->
             <div class="ui-expand-container">
-                <button onclick="ToggleHide('shape-dropdown', DropdownArrow, true);" class="toolbar-item"><span class="fa-solid fa-shapes"><span class="toolbar-more fa-solid fa-angle-right"></span></span></button>
+                <button onclick="ToggleHide('shape-dropdown', false, true);" class="toolbar-item"><span class="fa-solid fa-shapes"></span></button>
+                <p class="toolbar-item-title">Vormen</p>
                 <div id="shape-dropdown" class="ui-element ui-expand hidden ui-expand-top">
                     <button onclick="AddSquare();" class="toolbar-item"><span class="fa-solid fa-square"></span></button>
                     <button onclick="AddCircle();" class="toolbar-item"><span class="fa-solid fa-circle"></span></button>
@@ -44,15 +46,20 @@ $session_id = uniqid();
             </div>
 
             <!-- Text -->
-            <button onclick="AddText();" class="toolbar-item"><span class="fa-solid fa-t"></span></button>
+            <div class="ui-expand-container">
+                <button onclick="AddText();" class="toolbar-item"><span class="fa-solid fa-t"></span></button>
+                <p class="toolbar-item-title">Tekst</p>
+            </div>
 
             <!-- Images -->
             <div class="ui-expand-container">
                 <?php 
-                $img_dir = "../media/user-uploads/$session_id/";
                 $upload_link = "https://informaticaserver.ucis.nl/nc_designer/upload/upload.php?id=$session_id";
                 ?>
+
                 <button onclick="ToggleHide('image-dropdown', false, true);" class="toolbar-item"><span class="fa-solid fa-image"></span></button>
+                <p class="toolbar-item-title">Foto's</p>
+
                 <div id="image-dropdown" class="ui-element ui-expand ui-element-big hidden">
                     
                     <div id="gallery-header">
@@ -60,7 +67,7 @@ $session_id = uniqid();
                         <div id="gallery-buttons">
                             <button onclick="Hide('image-dropdown')"><span class="fa-solid fa-xmark"></span></button>
                             <!-- <button onclick="ToggleHide('qrcode-container')"><span class="fa-solid fa-plus"></span></button>
-                            <button onclick="LoadImagesFromServer('images-container', 'image-button', 'image-single', '<?php echo $img_dir ?>')"><span class="fa-solid fa-arrows-rotate"></span></button> -->
+                            <button onclick="LoadImagesFromServer('images-container', 'image-button', 'image-single')"><span class="fa-solid fa-arrows-rotate"></span></button> -->
                         </div>
                     </div>
 
@@ -84,13 +91,14 @@ $session_id = uniqid();
 
             <script>
             setInterval(function() { 
-                LoadImagesFromServer('images-container', 'image-button', 'image-single', '<?php echo $img_dir ?>', false, '<?php echo $session_id ?>');
+                LoadImagesFromServer('images-container', 'image-button', 'image-single', false, '<?php echo $session_id ?>');
             }, 1500);
             </script>
 
             <!-- Stickers -->
             <div class="ui-expand-container">
                 <button onclick="ToggleHide('sticker-dropdown', false, true);" class="toolbar-item"><span class="fa-solid fa-note-sticky"></span></button>
+                <p class="toolbar-item-title">Stickers</p>
                 <div id="sticker-dropdown" class="ui-element ui-expand ui-element-big hidden">
                     <div id="sticker-header">
                         <p id="sticker-title">Stickers</p>
@@ -101,9 +109,12 @@ $session_id = uniqid();
             </div>
 
             <!-- Color picker -->
-            <div id="color-container" class="ui-expand-container">
-                <button onclick="alwan.toggle();" id="color" class="toolbar-item"><span class="fa-solid fa-circle-dot"></span></button>
-                <div id="color-picker"></div>
+            <div class="ui-expand-container">
+                <div id="color-container" class="ui-expand-container">
+                    <button onclick="alwan.toggle();" id="color" class="toolbar-item"><span class="fa-solid fa-circle-dot"></span></button>
+                    <div id="color-picker"></div>
+                </div>
+                <p class="toolbar-item-title">Kleur</p>
             </div>
 
             <!-- Alignment -->
@@ -111,6 +122,7 @@ $session_id = uniqid();
                 <button onclick="ToggleHide('align-dropdown', false, true);" id="align" class="toolbar-item">
                     <span class="material-symbols-outlined">align_horizontal_left</span>
                 </button>
+                <p class="toolbar-item-title">Uitlijnen</p>
 
                 <div id="align-dropdown" class="ui-element ui-expand ui-element-big hidden">
                     <div id="align-left-to-right">
@@ -129,6 +141,7 @@ $session_id = uniqid();
             <!-- Trash -->
             <div id="trash-container" class="ui-expand-container">
                 <button onclick="Unhide('confirm-delete', false, true);" id="trash" class="toolbar-item"><span class="fa-solid fa-trash"></span></button>
+                <p class="toolbar-item-title">Verwijderen</p>
                 <div id="confirm-delete" class="ui-element ui-expand hidden">
                     <button onclick="DeleteObject();" class="toolbar-item"><span class="fa-solid fa-check"></span></button>
                     <button onclick="Hide('confirm-delete');" class="toolbar-item"><span class="fa-solid fa-times"></span></button>
@@ -139,13 +152,15 @@ $session_id = uniqid();
 
         <canvas id="canvas" width="500" height="500"></canvas>
 
-        <div id="pages-container">
-            <button onclick="PreviousPage()" class="toolbar-item"><span class="fa-solid fa-angle-left"></span></button>
-            <div id="preview-container"></div>
-            <button onclick="NextPage()" class="toolbar-item"><span class="fa-solid fa-angle-right"></span></button>
-        </div>
+        <div id="right-container">
+            <div id="pages-container" class="ui-element">
+                <button onclick="PreviousPage()" class="toolbar-item"><span class="fa-solid fa-angle-up"></span></button>
+                <div id="preview-container"></div>
+                <button onclick="NextPage()" class="toolbar-item"><span class="fa-solid fa-angle-down"></span></button>
+            </div>
 
-        <button onclick="Unhide('confirm-save-container')" id="save-btn">Design afronden <span class="fa-solid fa-arrow-right"></span></button>
+            <button onclick="Unhide('confirm-save-container')" id="save-btn" class="btn-alt">Design afronden <span class="fa-solid fa-arrow-right"></span></button>
+        </div>
 
         <div id="confirm-save-container" class="hidden">
             <div id="confirm-save">
@@ -163,7 +178,24 @@ $session_id = uniqid();
                 <span class="loader"></span>
                 <p id="loading-text">Uw kaart wordt verwerkt...</p>
             </div>
+
+            <div id="completion-container" class="hidden">
+                <a href="https://www.femkereuvers.shop/" id="completion-logo-container">
+                    <img src="../media/website/logo_met_onderschrift.png" id="completion-logo" draggable="false">
+                </a>
+                <div id="card-preview-container"></div>
+                <div id="completion-text-container">
+                    <p id="completion-text">Uw kaart is succesvol verwerkt.</p>
+                    <p id="completion-text">U kunt deze nu downloaden of een nieuwe kaart maken.</p>
+                    <p id="completion-text">Bedankt voor het winkelen bij Femke Reuvers!</p>
+                </div>
+                <div id="completion-buttons">
+                    <button onclick="location.reload();" class="btn-alt">Nieuwe kaart maken</button>
+                    <button onclick="DownloadPDF();" class="btn-alt">Download kaart als PDF</button>
+                </div>
+            </div>
         </div>
+
     </main>
 </body>
 </html>

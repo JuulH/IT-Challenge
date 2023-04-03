@@ -1,3 +1,8 @@
+pageImages = [];
+let maxArc = 25; // Preview image arc in degrees
+let blob;
+const card_preview_container = document.getElementById("card-preview-container");
+
 // Export the canvas to a PDF file
 async function exportPDF() {
 
@@ -10,11 +15,8 @@ async function exportPDF() {
 	let height = postcardHeight;
 	let margin = postcardMargins;
 	let backImage = "../media/website/logo_met_onderschrift.png";
-	// Format: 					[x,	y]
-	let backImageLocation = [5, 120];
-	let backImageSize = [47, 15];
-	let fileName = sessionId + ".pdf";
-
+	let backImageLocation = [5, 120]; // [x, y]
+	let backImageSize = [47, 15]; // [width, height]
 
 	// PDF file settings
 	var doc = new jsPDF({
@@ -60,6 +62,7 @@ async function exportPDF() {
 
 		// Convert the canvas to PNG
 		canvasData = canvas.toDataURL("png");
+		pageImages.push(canvasData);
 
 		// Add the PNG as an image to the PDF
 		doc.addImage(canvasData, 0, 0, width, height);
@@ -72,29 +75,57 @@ async function exportPDF() {
 	// Restore view to active page
 	canvas.loadFromJSON(pages[activePage]);
 
-	// Save the PDF file
-	// doc.save(fileName);
-	// outputFile = doc.output("blob");
-	// console.log(outputFile);
+	blob = doc.output('blob');
 
-	// // Save PDF to server
-	// var data = new FormData();
-	// data.append("pdf", outputFile);
+	let formData = new FormData();
+	formData.append('pdf', blob);
 
-	// let xhr = new XMLHttpRequest();
-	// xhr.open("POST", "uploadPDF.php");
-	// // xhr.setRequestHeader("Content-type", "application/pdf")
-	// xhr.onload = function () {
-	// 	if (xhr.status == 200) {
-	// 		xhr.send(data);	
-	// 		console.log(xhr.responseText);
-	// 	}
-	// 	else {
-	// 		alert("Error " + xhr.status + ": " + xhr.statusText);
-	// 	}
-	// };
+	$.ajax('utils/uploadPDF.php?id='+sessionId,
+		{
+			method: 'POST',
+			data: formData,
+			processData: false,
+			contentType: false,
+			success: function (data) { console.log(data) },
+			error: function (data) { console.log(data) }
+		});
 
 	// Disable loading overlay 
-	Hide("loading-overlay");
+	Hide("loading-container");
 	loading = false;
+	Unhide("completion-container");
+
+	// Show preview of images
+	for (let i = 0; i < pageImages.length; i++) {
+		let preview = document.createElement("img");
+		preview.src = pageImages[i];
+		preview.classList.add("preview-img");
+		preview.style.setProperty('--rotation', (-maxArc / 2 + i * (maxArc / (maxPages - 1))) + 'deg'); // Set rotation of image preview
+		preview.draggable = false; // Disable dragging of image preview
+		card_preview_container.appendChild(preview);
+	}
+
+	DeleteUserImages();
 };
+
+// Download PDF to client
+function DownloadPDF() {
+	if (blob) {
+		const link = document.createElement('a');
+		link.href = URL.createObjectURL(blob);
+		link.download = 'kaart-' + sessionId + '.pdf';
+		document.body.appendChild(link);
+		link.click();
+		document.body.removeChild(link);
+	}
+}
+
+// Delete all user uploaded images from server after design is complete
+function DeleteUserImages() {
+	$.ajax('utils/delete-images.php?id='+sessionId,
+		{
+			method: 'GET',
+			success: function (data) { console.log(data) },
+			error: function (data) { console.log(data) }
+		});
+}

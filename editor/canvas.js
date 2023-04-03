@@ -2,7 +2,7 @@
 const DOMCanvas = document.getElementById('canvas');
 const toolbar = document.getElementById('toolbar');
 const qrcode_container = document.getElementById('qrcode-container');
-const preview_container = document.getElementById('preview-container');
+const save_btn = document.getElementById('save-btn');
 
 // Get page size (in pixels)
 const pageWidth  = Math.max(document.documentElement.clientWidth,  window.innerWidth  || 0);
@@ -11,7 +11,7 @@ const pageAspectRatio = pageWidth / pageHeight;
 
 // Usable canvas size (in pixels)
 const canvasInset = 100; // Margin around canvas (in pixels)
-const canvasWidth  = pageWidth - toolbar.offsetWidth - parseFloat(getComputedStyle(toolbar)['margin-right']) - canvasInset;
+const canvasWidth  = pageWidth - toolbar.offsetWidth - parseFloat(getComputedStyle(toolbar)['margin-right']) - canvasInset - save_btn.offsetWidth - 200;
 const canvasHeight = pageHeight - canvasInset;  
 
 // Create canvas & configuration
@@ -53,51 +53,47 @@ canvas.setDimensions({width: `${cssWidth}px`, height: `${cssHeight}px`}, {cssOnl
 
 let sessionId = document.body.getAttribute('data-session-id');
 
-swatches = ['#000000', '#333333', '#666666', '#999999', '#CCCCCC', '#FFFFFF', '#1f77b4', '#2ca02c', '#ff7f0e', '#d62728', '#9467bd', '#8c564b', '#1e90ff', '#00bfff', '#00ced1', '#00ff7f', '#adff2f', '#ffd700', '#ff6347', '#ff4500', '#ffa07a', '#ff69b4', '#dc143c', '#a52a2a', '#008080', '#3cb371', '#32cd32', '#228b22', '#808000', '#556b2f', '#ffa500', '#ffdab9', '#f0e68c', '#fafad2', '#ffff00', '#d2b48c'];
+// Alwan color picker
+let swatches = [
+    '#000000', '#333333', '#666666', '#999999', '#CCCCCC', '#FFFFFF',
+    '#3d0000', '#7a0000', '#ff0000', '#b85000', '#ff6f00', '#e5ff00',
+    '#115201', '#219e02', '#33ff00', '#00ffa2', '#02dcf0', '#00aade',
+    '#6800de', '#3800b0', '#2b0173', '#001b52', '#003882', '#00568f',
+];
 
 const alwan = new Alwan('#color', {
     theme: 'light',
     toggle: true,
     popover: true,
     position: 'right',
-    // Set the gap (in pixels) between the picker container and the reference element.
     margin: 20,
-    // Replace the reference element with a pre-styled button.
-    //  In case you set the preset to false (using your own reference element), 
-    // to access the color to change its background or any other property, 
-    // add the css custom property to your styles --tw-color.
-    preset: false,
-    // Initial color.
+    preset: false, // Use custom button
     color: '#000',
-    // Default color.
     default: '#000',
-    // Target can be a selector or an HTML element,
-    // If the option popover is true, the picker container will be positionned retalive to this element,
-    // instead of the reference element.
-    // else if popover option is false, the picker container will be appended as a child into this element.
-    target: 'color',
+    target: 'color', // On which element the picker will be appended
     disabled: false,
-    format: 'hex',
+    format: 'hex', // Output format of color
     singleInput: false,
-    inputs: {},
-    opacity: false,
-    preview: true,
-    copy: false,
-    // Array of color strings, invalid color strings will default to rgb(0,0,0).
+    inputs: {}, // Allow Hex, RGB, HSL inputs
+    opacity: false, // Show/Hide opacity slider
+    preview: true, // Show a preview of the color
+    copy: false, // Copy the color to clipboard
     swatches: swatches,
-    // Show/Hide swatches container (Make swatches container collapsible).
     toggleSwatches: false,
-    // Picker widget shared between multiple instance (this is good if you have many color picker instances).
-    shared: false,
+    shared: false, // Shared between multiple instances
 
 });
 
 // Load images from server using AJAX
 let activeImages = [];
 
-function LoadImagesFromServer(target, buttonClass, imageClass, dir, sticker, sessionId) {
+function LoadImagesFromServer(target, buttonClass, imageClass, sticker, sessionId) {
     let xhr = new XMLHttpRequest();
-    xhr.open("GET", "refresh-images.php?dir=" + dir);
+    if (sticker) {
+        xhr.open("GET", "utils/refresh-images.php?sticker=" + true);
+    } else {
+        xhr.open("GET", "utils/refresh-images.php?id=" + sessionId);
+    }
     xhr.onload = function () {
         if (xhr.status === 200) {
             let images = JSON.parse(xhr.responseText); // Parse the JSON string into an object
@@ -135,4 +131,4 @@ function LoadImagesFromServer(target, buttonClass, imageClass, dir, sticker, ses
     xhr.send();
 }
 
-LoadImagesFromServer('sticker-container', 'image-button', 'sticker-single', '../media/stickers/', true);
+LoadImagesFromServer('sticker-container', 'image-button', 'sticker-single', true);

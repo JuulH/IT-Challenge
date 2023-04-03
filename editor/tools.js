@@ -1,5 +1,4 @@
 // Get DOM elements
-const shapeDropdownArrow = document.getElementsByClassName('toolbar-more')[0];
 const colorPicker = document.getElementById('color-input');
 const colorExpand = document.getElementById('color-picker');
 const colorContainer = document.getElementById('color-container');
@@ -22,13 +21,6 @@ function ToggleHide(element, fn, hideAll) {
         for (element of elementsToHide) {
             if (element.id != elementToHide.id) {
                 element.classList.add('hidden');
-
-                // Close dropdown arrow (slightly funky)
-                let toolbarMore = element.previousElementSibling.firstChild.firstChild;
-                if (toolbarMore && toolbarMore.classList.contains('toolbar-more')) {
-                    element.previousElementSibling.firstChild.firstChild.classList.remove('fa-angle-left');
-                    element.previousElementSibling.firstChild.firstChild.classList.add('fa-angle-right');
-                }
             }
         }
     }
@@ -47,13 +39,6 @@ function Unhide(element, fn, hideAll) {
         for (element of elementsToHide) {
             if (element.id != elementToHide.id) {
                 element.classList.add('hidden');
-
-                // Close dropdown arrow (slightly funky)
-                let toolbarMore = element.previousElementSibling.firstChild.firstChild;
-                if (toolbarMore && toolbarMore.classList.contains('toolbar-more')) {
-                    element.previousElementSibling.firstChild.firstChild.classList.remove('fa-angle-left');
-                    element.previousElementSibling.firstChild.firstChild.classList.add('fa-angle-right');
-                }
             }
         }
     }
@@ -72,13 +57,6 @@ function Hide(element, fn, hideAll) {
         for (element of elementsToHide) {
             if (element.id != elementToHide.id) {
                 element.classList.add('hidden');
-
-                // Close dropdown arrow (slightly funky)
-                let toolbarMore = element.previousElementSibling.firstChild.firstChild;
-                if (toolbarMore && toolbarMore.classList.contains('toolbar-more')) {
-                    element.previousElementSibling.firstChild.firstChild.classList.remove('fa-angle-left');
-                    element.previousElementSibling.firstChild.firstChild.classList.add('fa-angle-right');
-                }
             }
         }
     }
@@ -94,7 +72,6 @@ function AlignObject(direction) {
 
     selectedObjects.forEach((object) => {
         let bounds = object.getBoundingRect();
-        let matrix = object.calcTransformMatrix();
 
         switch (direction) {
             case 'left':
@@ -122,7 +99,8 @@ function AlignObject(direction) {
     canvas.renderAll();
 }
 
-// Add shapes
+// Shapes
+// Dropdown arrow (unused)
 function DropdownArrow() {
     shapeDropdownArrow.classList.toggle('fa-angle-right');
     shapeDropdownArrow.classList.toggle('fa-angle-left');
@@ -141,7 +119,7 @@ function AddSquare() {
     canvas.add(rect);
     canvas.setActiveObject(canvas.item(canvas.getObjects().length - 1));
     canvas.renderAll();
-    Hide('shape-dropdown', DropdownArrow);
+    Hide('shape-dropdown');
 } 
 
 function AddCircle() {
@@ -156,7 +134,7 @@ function AddCircle() {
     canvas.add(circle);
     canvas.setActiveObject(canvas.item(canvas.getObjects().length - 1));
     canvas.renderAll();
-    Hide('shape-dropdown', DropdownArrow);
+    Hide('shape-dropdown');
 }
 
 function AddTriangle() {
@@ -172,7 +150,7 @@ function AddTriangle() {
     canvas.add(rect);
     canvas.setActiveObject(canvas.item(canvas.getObjects().length - 1));
     canvas.renderAll();
-    Hide('shape-dropdown', DropdownArrow);
+    Hide('shape-dropdown');
 }
 
 function AddText() {
@@ -240,15 +218,6 @@ function DeleteObject() {
 let currentColor = 'black';
 colorIcon.style.color = currentColor;
 
-// function OpenPicker() {
-//     setTimeout(() => {
-//         if (!colorExpand.classList.contains('hidden')) {
-//             colorPicker.focus();
-//             colorPicker.click();
-//         }
-//     }, 0);
-// }
-
 function SetColor(color) {
     currentColor = color;
     colorIcon.style.color = color;
@@ -260,14 +229,6 @@ function SetColor(color) {
 
     canvas.renderAll();
 }
-
-// colorPicker.addEventListener('input', (event) => {
-//     SetColor(event.target.value);
-// });
-
-// colorPicker.addEventListener('blur', () => {
-//     Hide('color-picker');
-// });
 
 alwan.on('color', function (color) {
     SetColor(color.hex());

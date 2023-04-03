@@ -53,15 +53,16 @@ main {
     align-items: center;
     justify-content: space-evenly;
     filter: drop-shadow(0 0 15px rgba(0, 0, 0, 0.2));
-    gap: 1rem;
+    gap: .75rem;
     border-radius: 10rem;
+    padding: 1rem 1rem 2rem 1rem;
 }
 
 .toolbar-item {
     font-size: 2rem;
     background-color: transparent;
-    width: 5rem;
-    height: 5rem;
+    width: 4.75rem;
+    height: 4.75rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -99,9 +100,16 @@ main {
 .ui-expand-container {
     position: relative;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+.toolbar-item-title {
+    margin: -0.3rem 0 0 0;
+    font-size: .9rem;
+    text-align: center;
+    user-select: none;
 }
 
 .ui-expand {
@@ -300,12 +308,12 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
-    position: absolute;
-    bottom: .5rem;
-    background-color: white;
-    border-radius: 1rem;
     box-shadow: var(--drop-shadow);
-    padding: .25rem;
+    padding: 0;
+    flex-direction: column;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 #pages-container button {
@@ -322,6 +330,7 @@ main {
     align-items: center;
     justify-content: center;
     margin-bottom: .1rem;
+    flex-direction: column;
 }
 
 .preview-button {
@@ -366,25 +375,37 @@ main {
     transition: outline-color 0.05s ease-in-out;
 }
 
+#right-container {
+    position: relative;
+    height: 100%;
+    margin-left: 1.5rem;
+}
+
 #save-btn {
     position: absolute;
-    bottom: 0;
-    right: 10rem;
-    transform: translateY(-50%);
+    bottom: 3rem;
+    font-size: .9rem;
+    width: 200px;
+}
+
+.btn-alt {
     background-color: var(--accent-color);
     color: white;
     border-radius: 10rem;
     border: none;
     padding: 1.25rem 2rem;
+    font-family: inherit;
+    user-select: none;
     box-shadow: var(--drop-shadow-darker);
-    font-size: .9rem;
+    transition: transform 0.15s ease;
 }
 
-#save-btn:hover {
+.btn-alt:hover {
     background-color: var(--accent-color-darker);
+    transform: translateY(-2px);
 }
 
-#save-btn:active {
+.btn-alt:active {
     background-color: var(--accent-color-darkest);
 }
 
@@ -400,7 +421,7 @@ main {
     left: 0;
     width: 100vw;
     height: 100vh;
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(10px);
     z-index: 999;
 }
 
@@ -526,4 +547,58 @@ main {
         left: calc(100% + 14px);
         transform: rotate(25deg);
     }
+}
+
+/* On card completed */
+#completion-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#completion-text-container {
+    margin: 2rem 0;
+}
+
+#completion-text {
+    font-size: 1.25rem;
+    text-align: center;
+}
+
+#completion-buttons .btn-alt {
+    font-size: 1.25rem;
+    padding: 1rem 1.75rem;
+}
+
+#completion-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+#card-preview-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.preview-img {
+    width: 300px;
+    background-color: white;
+    transform: rotate(var(--rotation));
+    margin: 0 -2rem;
+    box-shadow: var(--drop-shadow);
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+#completion-logo-container {
+    position: absolute;
+    top: 2rem;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+#completion-logo {
+    width: 200px;
 }

@@ -5,9 +5,9 @@ if (isset($_GET['img']) && (isset($_GET['id']) || isset($_GET['sticker']))) {
 
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
-        $path = dirname(__DIR__, 1) . '/media/user-uploads/' . $id . '/' . $img;
+        $path = dirname(__DIR__, 2) . '/media/user-uploads/' . $id . '/' . $img;
     } else if (isset($_GET['sticker'])) {
-        $path = dirname(__DIR__, 1) . '/media/stickers/' . $img;
+        $path = dirname(__DIR__, 2) . '/media/stickers/' . $img;
     }
 
     // Allowed mime content types
