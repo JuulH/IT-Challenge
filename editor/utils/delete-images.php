@@ -2,7 +2,7 @@
 
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
-    $dir = dirname(__DIR__, 1) . "/media/user-uploads/" . $id . "/";
+    $dir = dirname(__DIR__, 2) . "/media/user-uploads/" . $id . "/";
 
     if(is_dir($dir)) {
         // Delete all files in directory
