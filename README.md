@@ -9,7 +9,7 @@ The Card Designer is an IT-Challenge project for [Femke Reuvers](https://www.fem
 
 ## Features
 
-The card designer allows users to:
+The designer allows users to:
 - Add shapes, text
 - Upload their own images through a mobile QR code or use preset "stickers"
 - Apply colors to objects
