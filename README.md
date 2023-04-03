@@ -21,7 +21,7 @@ The designer allows users to:
 
 The designer depends on:
 - [Fabric.js](https://github.com/fabricjs/fabric.js) (high-level canvas usage)
-- [QRCode.js](https://github.com/davidshimjs/qrcodejs) (generating QR codes at runtime)
+- [QRCode.js](https://github.com/davidshimjs/qrcodejs) (generating QR-codes at runtime)
 - [jsPDF](https://github.com/parallax/jsPDF) (exporting card as PDF)
 - [alwan](https://github.com/SofianChouaib/alwan) (customizable color picker)
 - [jQuery](https://github.com/jquery/jquery) (AJAX requests & PDF upload)
