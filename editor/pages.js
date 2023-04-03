@@ -1,5 +1,6 @@
 const previewContainer = document.getElementById('preview-container');
 
+// Configure amount of pages
 let maxPages = 3;
 let pages = new Array(maxPages);
 let ctxs = new Array(maxPages);
@@ -13,12 +14,13 @@ const pageDescriptors = [
     "Achter"
 ];
 
+// Preview size on screen
 const factor = 5;
 const cssFactor = 1.9;
 const previewWidth = cssWidth / factor;
 const previewHeight = cssHeight / factor;
 
-// Cutting lines
+// Draw cutting margins
 const cuttingLineOptions = {
     stroke: 'blue',
     strokeWidth: 3,
@@ -41,9 +43,10 @@ const cuttingLineLayer = new fabric.Group([cuttingLineTop, cuttingLineBottom, cu
 
 canvas.add(cuttingLineLayer);
 
+// Switch between pages
 function LoadPage(i) {
     loading = true;
-    canvas.remove(cuttingLineLayer);
+    canvas.remove(cuttingLineLayer); // Temporarily remove margins
     UpdatePreview();
     pages[activePage] = canvas.toJSON(); // Save current page
     
@@ -56,7 +59,7 @@ function LoadPage(i) {
     ctxs[activePage].canvas.parentElement.classList.remove('active');
     ctxs[i].canvas.parentElement.classList.add('active');
 
-    canvas.add(cuttingLineLayer);
+    canvas.add(cuttingLineLayer); // Bring back margins
 
     activePage = i;
     loading = false;
@@ -111,6 +114,7 @@ function UpdatePreview() {
 // Create canvases
 if (maxPages > 1) {
     for (let i = 0; i < maxPages; i++) {
+        // Create preview canvas
         let pCanvas = document.createElement('canvas');
         pCanvas.width = previewWidth;
         pCanvas.height = previewHeight;
@@ -118,6 +122,7 @@ if (maxPages > 1) {
         pCanvas.style.width = previewWidth / cssFactor + 'px';
         pCanvas.style.height = previewHeight / cssFactor + 'px';
 
+        // Create button
         let pButton = document.createElement('div');
         pButton.onclick = () => LoadPage(i);
         pButton.className = 'preview-button';
@@ -126,6 +131,7 @@ if (maxPages > 1) {
         pButton.setAttribute('data-tooltip', pageDescriptors[i]);
         previewContainer.appendChild(pButton);
 
+        // Fill background
         ctxs[i] = pCanvas.getContext('2d');
         ctxs[i].fillStyle = "#ffffff";
         ctxs[i].fillRect(0, 0, previewWidth, previewHeight);

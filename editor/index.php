@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/canvg/3.0.9/umd.min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/alwan/dist/css/alwan.min.css">
     <script src="https://unpkg.com/alwan/dist/js/alwan.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
@@ -39,15 +38,15 @@ $session_id = uniqid();
                 <button onclick="ToggleHide('shape-dropdown', false, true);" class="toolbar-item"><span class="fa-solid fa-shapes"></span></button>
                 <p class="toolbar-item-title">Vormen</p>
                 <div id="shape-dropdown" class="ui-element ui-expand hidden ui-expand-top">
-                    <button onclick="AddSquare();" class="toolbar-item"><span class="fa-solid fa-square"></span></button>
-                    <button onclick="AddCircle();" class="toolbar-item"><span class="fa-solid fa-circle"></span></button>
-                    <button onclick="AddTriangle();" class="toolbar-item"><span class="fa-solid fa-play"></span></button>
+                    <button onclick="AddSquare();" class="toolbar-item clickable"><span class="fa-solid fa-square"></span></button>
+                    <button onclick="AddCircle();" class="toolbar-item clickable"><span class="fa-solid fa-circle"></span></button>
+                    <button onclick="AddTriangle();" class="toolbar-item clickable"><span class="fa-solid fa-play"></span></button>
                 </div>
             </div>
 
             <!-- Text -->
             <div class="ui-expand-container">
-                <button onclick="AddText();" class="toolbar-item"><span class="fa-solid fa-t"></span></button>
+                <button onclick="AddText();" class="toolbar-item clickable"><span class="fa-solid fa-t"></span></button>
                 <p class="toolbar-item-title">Tekst</p>
             </div>
 
@@ -62,12 +61,10 @@ $session_id = uniqid();
 
                 <div id="image-dropdown" class="ui-element ui-expand ui-element-big hidden">
                     
-                    <div id="gallery-header">
-                        <p id="gallery-title">Fotobibliotheek</p>
-                        <div id="gallery-buttons">
+                    <div class="gallery-header">
+                        <p class="gallery-title">Fotobibliotheek</p>
+                        <div class="gallery-buttons">
                             <button onclick="Hide('image-dropdown')"><span class="fa-solid fa-xmark"></span></button>
-                            <!-- <button onclick="ToggleHide('qrcode-container')"><span class="fa-solid fa-plus"></span></button>
-                            <button onclick="LoadImagesFromServer('images-container', 'image-button', 'image-single')"><span class="fa-solid fa-arrows-rotate"></span></button> -->
                         </div>
                     </div>
 
@@ -100,8 +97,11 @@ $session_id = uniqid();
                 <button onclick="ToggleHide('sticker-dropdown', false, true);" class="toolbar-item"><span class="fa-solid fa-note-sticky"></span></button>
                 <p class="toolbar-item-title">Stickers</p>
                 <div id="sticker-dropdown" class="ui-element ui-expand ui-element-big hidden">
-                    <div id="sticker-header">
-                        <p id="sticker-title">Stickers</p>
+                    <div class="gallery-header">
+                        <p class="gallery-title">Stickers</p>
+                        <div class="gallery-buttons">
+                            <button onclick="Hide('sticker-dropdown')"><span class="fa-solid fa-xmark"></span></button>
+                        </div>
                     </div>
 
                     <div id="sticker-container"></div>
@@ -126,14 +126,14 @@ $session_id = uniqid();
 
                 <div id="align-dropdown" class="ui-element ui-expand ui-element-big hidden">
                     <div id="align-left-to-right">
-                        <button onclick="AlignObject('left');" class="toolbar-item align-btn"><span class="material-symbols-outlined">align_horizontal_left</span></button>
-                        <button onclick="AlignObject('center');" class="toolbar-item align-btn"><span class="material-symbols-outlined">align_horizontal_center</span></button>
-                        <button onclick="AlignObject('right');" class="toolbar-item align-btn"><span class="material-symbols-outlined">align_horizontal_right</span></button>
+                        <button onclick="AlignObject('left');" class="toolbar-item align-btn clickable"><span class="material-symbols-outlined">align_horizontal_left</span></button>
+                        <button onclick="AlignObject('center');" class="toolbar-item align-btn clickable"><span class="material-symbols-outlined">align_horizontal_center</span></button>
+                        <button onclick="AlignObject('right');" class="toolbar-item align-btn clickable"><span class="material-symbols-outlined">align_horizontal_right</span></button>
                     </div>
                     <div id="align-top-to-bottom">
-                        <button onclick="AlignObject('top');" class="toolbar-item align-btn"><span class="material-symbols-outlined">align_vertical_top</span></button>
-                        <button onclick="AlignObject('middle');" class="toolbar-item align-btn"><span class="material-symbols-outlined">align_vertical_center</span></button>
-                        <button onclick="AlignObject('bottom');" class="toolbar-item align-btn"><span class="material-symbols-outlined">align_vertical_bottom</span></button>
+                        <button onclick="AlignObject('top');" class="toolbar-item align-btn clickable"><span class="material-symbols-outlined">align_vertical_top</span></button>
+                        <button onclick="AlignObject('middle');" class="toolbar-item align-btn clickable"><span class="material-symbols-outlined">align_vertical_center</span></button>
+                        <button onclick="AlignObject('bottom');" class="toolbar-item align-btn clickable"><span class="material-symbols-outlined">align_vertical_bottom</span></button>
                     </div>
                 </div>
             </div>
@@ -143,8 +143,8 @@ $session_id = uniqid();
                 <button onclick="Unhide('confirm-delete', false, true);" id="trash" class="toolbar-item"><span class="fa-solid fa-trash"></span></button>
                 <p class="toolbar-item-title">Verwijderen</p>
                 <div id="confirm-delete" class="ui-element ui-expand hidden">
-                    <button onclick="DeleteObject();" class="toolbar-item"><span class="fa-solid fa-check"></span></button>
-                    <button onclick="Hide('confirm-delete');" class="toolbar-item"><span class="fa-solid fa-times"></span></button>
+                    <button onclick="DeleteObject();" class="toolbar-item clickable"><span class="fa-solid fa-check"></span></button>
+                    <button onclick="Hide('confirm-delete');" class="toolbar-item clickable"><span class="fa-solid fa-times"></span></button>
                 </div>
             </div>
             

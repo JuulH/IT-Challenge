@@ -40,11 +40,13 @@
                 <div id="upload-status">
                     <?php 
                         if (isset($_GET['error'])) {
-                            echo "<p class='error'>Sorry, er is iets fout gegaan. Probeer het opnieuw.</p>";
+                            echo "<p class='error'>Sorry, er is iets fout gegaan.</p>";
+                            echo "<p class='error'>Probeer het opnieuw.</p>";
                         }
 
                         if (isset($_GET['success'])) {
-                            echo "<p class='success'>Uw foto's zijn succesvol geüpload. Nog een uploaden?</p>";
+                            echo "<p class='success'>Uw foto's zijn succesvol geüpload.</p>";
+                            echo "<p class='success'>Nog een uploaden?</p>";
                         }
                     ?>
                 </div>

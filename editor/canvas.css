@@ -134,6 +134,20 @@ main {
     border-radius: 10rem;
 }
 
+#alwan-color-picker {
+    border-radius: .25rem;
+    max-width: 250px;
+}
+
+#alwan-color-picker > .alwan__palette{
+    border-radius: .5rem .5rem 0 0;
+}
+
+#alwan-color-picker > .alwan__swatches {
+    border-radius: 0 0 .5rem .5rem;
+    max-height: unset;
+}
+
 #trash {
     color: rgb(200, 70, 70);
 }
@@ -147,15 +161,17 @@ main {
 /* Images */
 #image-dropdown {
     width: 336px;
+    max-height: 65vh;
+    overflow-y: auto;
 }
 
-#gallery-title {
+.gallery-title {
     text-align: center;
     font-size: 1.25rem;
     font-weight: 600;
 }
 
-#gallery-header {
+.gallery-header {
     position: relative;
     padding: .5rem;
     /* background-color: #f7f7f7; */
@@ -163,14 +179,14 @@ main {
     margin-bottom: 1rem;
 }
 
-#gallery-buttons {
+.gallery-buttons {
     position: absolute;
     top: 50%;
     right: 1rem;
     transform: translateY(-50%);
 }
 
-#gallery-buttons > button {
+.gallery-buttons > button {
     cursor: pointer;
     border: none;
     width: 2rem;
@@ -179,11 +195,11 @@ main {
     background-color: transparent;
 }
 
-#gallery-buttons > button:hover {
+.gallery-buttons > button:hover {
     background-color: #e6e6e6;
 }
 
-#gallery-buttons > button:active {
+.gallery-buttons > button:active {
     background-color: #dddddd;
 }
 
@@ -303,6 +319,10 @@ main {
     justify-content: center;
 }
 
+.clickable {
+    cursor: pointer;
+}
+
 /* Page previews */
 #pages-container {
     display: flex;
@@ -319,6 +339,7 @@ main {
 #pages-container button {
     background-color: transparent;
     transition: filter 0.1s ease;
+    cursor: pointer;
 }
 
 #pages-container button:hover {
@@ -398,6 +419,7 @@ main {
     user-select: none;
     box-shadow: var(--drop-shadow-darker);
     transition: transform 0.15s ease;
+    cursor: pointer;
 }
 
 .btn-alt:hover {
@@ -488,6 +510,7 @@ main {
     margin-top: 1rem;
     text-align: center;
     align-self: center;
+    font-size: 1.08rem;
 }
 
 .loader:before {
@@ -590,6 +613,19 @@ main {
     box-shadow: var(--drop-shadow);
     user-select: none;
     -webkit-user-drag: none;
+    animation: slideIn .5s ease-out;
+}
+
+@keyframes slideIn {
+    0% {
+        opacity: 0;
+        transform: translateY(10%) rotate(calc(var(--rotation) / 2));
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0) rotate(var(--rotation));
+    }
 }
 
 #completion-logo-container {

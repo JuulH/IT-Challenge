@@ -8,10 +8,8 @@ const trashChildren = Array.from(trash.getElementsByTagName("*"));
 const colorChildren = Array.from(colorContainer.getElementsByTagName("*"));
 const alignContainer = document.getElementById('align-container');
 const alignChildren = Array.from(alignContainer.getElementsByTagName("*"));
-const alwanDOM = document.getElementsByClassName('alwan')[0];
-const alwanChildren = Array.from(alwanDOM.getElementsByTagName("*"));
 
-// UI Control
+// UI Controls
 function ToggleHide(element, fn, hideAll) {
     let elementToHide = document.getElementById(element);
     elementToHide.classList.toggle('hidden');
@@ -66,6 +64,91 @@ function Hide(element, fn, hideAll) {
     }
 }
 
+// Alwan color picker
+let swatches = [
+    '#000000', '#333333', '#666666', '#999999', '#CCCCCC', '#FFFFFF',
+    '#3d0000', '#7a0000', '#ff0000', '#b85000', '#ff6f00', '#e5ff00',
+    '#115201', '#219e02', '#33ff00', '#00ffa2', '#02dcf0', '#00aade',
+    '#6800de', '#3800b0', '#2b0173', '#001b52', '#003882', '#00568f',
+];
+
+const alwan = new Alwan('#color', {
+    id: 'alwan-color-picker',
+    theme: 'light',
+    toggle: true,
+    popover: true,
+    position: 'right',
+    margin: 25,
+    preset: false, // Use custom button
+    color: '#000',
+    default: '#000',
+    target: 'color', // On which element the picker will be appended
+    disabled: false,
+    format: 'hex', // Output format of color
+    singleInput: false,
+    inputs: {}, // Allow Hex, RGB, HSL inputs
+    opacity: false, // Show/Hide opacity slider
+    preview: true, // Show a preview of the color
+    copy: false, // Copy the color to clipboard
+    swatches: swatches,
+    toggleSwatches: false,
+    shared: false, // Shared between multiple instances
+
+});
+
+const alwanDOM = document.getElementsByClassName('alwan')[0];
+const alwanChildren = Array.from(alwanDOM.getElementsByTagName("*"));
+
+// Load images from server using AJAX
+let activeImages = [];
+
+function LoadImagesFromServer(target, buttonClass, imageClass, sticker, sessionId) {
+    let xhr = new XMLHttpRequest();
+    if (sticker) {
+        xhr.open("GET", "utils/refresh-images.php?sticker=" + true);
+    } else {
+        xhr.open("GET", "utils/refresh-images.php?id=" + sessionId);
+    }
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            let images = JSON.parse(xhr.responseText); // Parse the JSON string into an object
+            if (images.length != 0 && !images.every((val, i) => val === activeImages[i])) {
+                let imagesContainer = document.getElementById(target);
+                if (imagesContainer.classList.contains("images-container")) { qrcode_container.classList.add("hidden") };
+
+                images.forEach(image => { // Create DOM elements
+                    if (activeImages.includes(image)) { return; }
+
+                    if (sticker) {
+                        image += "&sticker=true";
+                    } else {
+                        image += "&id=" + sessionId;
+                    }
+
+                    let button = document.createElement("button");
+                    button.classList.add(buttonClass, 'clickable');
+                    button.addEventListener("click", function () { AddImage(image); });
+
+                    let img = document.createElement("img");
+                    img.classList.add(imageClass);
+                    img.src = image;
+                    button.appendChild(img);
+
+                    imagesContainer.appendChild(button);
+                });
+
+                activeImages = images;
+            }
+        } else {
+            alert("Error " + xhr.status + ": " + xhr.statusText);
+        }
+    };
+    xhr.send();
+}
+
+// Load stickers from server
+LoadImagesFromServer('sticker-container', 'image-button', 'sticker-single', true);
+
 // Align objects
 function AlignObject(direction) {
     let selectedObjects = canvas.getActiveObjects();
@@ -99,13 +182,7 @@ function AlignObject(direction) {
     canvas.renderAll();
 }
 
-// Shapes
-// Dropdown arrow (unused)
-function DropdownArrow() {
-    shapeDropdownArrow.classList.toggle('fa-angle-right');
-    shapeDropdownArrow.classList.toggle('fa-angle-left');
-}
-
+// Add objects to canvas
 function AddSquare() {
     let rect = new fabric.Rect({
         width: 200,
@@ -197,7 +274,7 @@ function AddImage(url) {
     Hide('sticker-dropdown');
 }
 
-// Delete items
+// Delete objects
 function DeleteObject() {
     Hide('confirm-delete');
 
@@ -234,7 +311,7 @@ alwan.on('color', function (color) {
     SetColor(color.hex());
 });
 
-
+// Keyboard controls
 document.addEventListener('keydown', (event) => {
     if (event.key == 'Delete' || event.key == 'Backspace') {
         DeleteObject();
@@ -254,7 +331,7 @@ fabric.Object.prototype.cornerColor = 'blue';
 fabric.Object.prototype.cornerStyle = 'circle';
 fabric.Object.prototype.borderColor = 'blue';
 fabric.Object.prototype.cornerSize = 20;
-//fabric.Object.prototype.borderDashArray = [5, 5];
+//fabric.Object.prototype.borderDashArray = [10, 5];
 
 // Create layer icons
 let layerUpIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path fill="${fabric.Object.prototype.cornerColor}" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM377 271c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-87-87-87 87c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9L239 167c9.4-9.4 24.6-9.4 33.9 0L377 271z"/></svg>`;
@@ -267,6 +344,7 @@ let layerDownBlob = new Blob([layerDownIcon], { type: 'image/svg+xml;charset=utf
 let layerDownImg = new Image();
 layerDownImg.src = URL.createObjectURL(layerDownBlob);
 
+// Move layer up or down
 function moveLayer(transform, forward) {
     let target = transform.target;
     let canvas = target.canvas;
@@ -278,10 +356,11 @@ function moveLayer(transform, forward) {
     }
 }
 
+// Create custom controls
 fabric.Object.prototype.controls.layerUp = new fabric.Control({
     x: 0.5,
     y: 0,
-    offsetX: 26,
+    offsetX: 30,
     offsetY: -22,
     cursorStyle: 'pointer',
     mouseUpHandler: function(eventData, transform) { moveLayer(transform, true); },
@@ -292,7 +371,7 @@ fabric.Object.prototype.controls.layerUp = new fabric.Control({
 fabric.Object.prototype.controls.layerDown = new fabric.Control({
     x: 0.5,
     y: 0,
-    offsetX: 26,
+    offsetX: 30,
     offsetY: 22,
     cursorStyle: 'pointer',
     mouseUpHandler: function (eventData, transform) { moveLayer(transform, false); },
