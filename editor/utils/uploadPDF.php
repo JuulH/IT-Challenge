@@ -6,5 +6,6 @@ if(isset($_FILES['pdf']) && isset($_GET['id'])) {
     );
 } else {
     header('HTTP/1.0 404 Not Found');
+    exit;
 }
 ?>

@@ -49,6 +49,6 @@ canvas.setHeight(postcardHeight * mmToInch * PPI);
 
 // Set canvas CSS size
 canvas.setDimensions({width: `${cssWidth}px`, height: `${cssHeight}px`}, {cssOnly: true});
-// toolbar.style.height = `calc(${cssHeight}px - 1.5rem)`;
+// toolbar.style.height = `calc(${cssHeight}px - 1.5rem)`; // Set toolbar height to canvas height
 
 let sessionId = document.body.getAttribute('data-session-id');

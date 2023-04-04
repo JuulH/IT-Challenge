@@ -1,7 +1,8 @@
 pageImages = [];
-let maxArc = 25; // Preview image arc in degrees
+let maxArc = 20; // Preview image arc in degrees
 let blob;
 const card_preview_container = document.getElementById("card-preview-container");
+const animationDelay = 200; // Delay between each image preview animation in ms
 
 // Export the canvas to a PDF file
 async function exportPDF() {
@@ -101,6 +102,8 @@ async function exportPDF() {
 		preview.src = pageImages[i];
 		preview.classList.add("preview-img");
 		preview.style.setProperty('--rotation', (-maxArc / 2 + i * (maxArc / (maxPages - 1))) + 'deg'); // Set rotation of image preview
+		// preview.style.setProperty('margin-top', Math.abs(-maxArc / 2 + i * (maxArc / (maxPages - 1))) / 4 + 'rem'); // Set margin of image preview
+		preview.style.setProperty('animation-delay', (i * animationDelay) + 'ms'); // Set delay of image preview animation
 		preview.draggable = false; // Disable dragging of image preview
 		card_preview_container.appendChild(preview);
 	}

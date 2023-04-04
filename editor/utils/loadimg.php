@@ -16,7 +16,7 @@ if (isset($_GET['img']) && (isset($_GET['id']) || isset($_GET['sticker']))) {
     $filetype = mime_content_type($path);
 
     if (in_array($filetype, $allowed)) {
-        header('Content-Type: ' . $filetype);
+        header('Content-Type: ' . $filetype); // Present self as image
         $image = readfile($path);
     } else {
         header('HTTP/1.0 404 Not Found');

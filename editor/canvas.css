@@ -496,6 +496,7 @@ main {
     flex-direction: column;
 }
 
+/* Loading animation adapted from https: //cssloaders.github.io/ */ 
 .loader {
     position: relative;
     height: 200px;
@@ -613,7 +614,9 @@ main {
     box-shadow: var(--drop-shadow);
     user-select: none;
     -webkit-user-drag: none;
-    animation: slideIn .5s ease-out;
+    opacity: 0;
+    transform: translateY(10%) rotate(calc(var(--rotation) / 2));
+    animation: slideIn .5s ease-out forwards;
 }
 
 @keyframes slideIn {

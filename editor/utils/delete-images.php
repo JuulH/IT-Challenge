@@ -14,7 +14,7 @@ if (isset($_GET['id'])) {
         }
         
         // Delete directory
-            rmdir($dir);
+        rmdir($dir);
     }
 
 } else {
